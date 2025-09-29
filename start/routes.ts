@@ -18,7 +18,7 @@ const AuthController = () => import('#controllers/auth_controller')
 */
 router
   .group(() => {
-    router.get('auth', [AuthController, 'login']).as('login')
+    router.post('login', [AuthController, 'login']).as('login')
   })
   .as('auth')
   .prefix('auth')
