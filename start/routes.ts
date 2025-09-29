@@ -9,8 +9,16 @@
 
 import router from '@adonisjs/core/services/router'
 
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
-})
+const AuthController = () => import('#controllers/auth_controller')
+
+/*
+|--------------------------------------------------------------------------
+| AUTH Routes
+|--------------------------------------------------------------------------
+*/
+router
+  .group(() => {
+    router.get('auth', [AuthController, 'login']).as('login')
+  })
+  .as('auth')
+  .prefix('auth')

@@ -1,33 +1,43 @@
-import { DateTime } from 'luxon'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, computed } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
+
+import type { UserRoleEnum } from '#enums/user'
+
+import withID from '#models/utils/with_id'
+import { withTimestamps } from '#models/utils/with_timestamps'
+import { DateTime } from 'luxon'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
   passwordColumnName: 'password',
 })
 
-export default class User extends compose(BaseModel, AuthFinder) {
-  @column({ isPrimary: true })
-  declare id: number
+export default class User extends compose(BaseModel, AuthFinder, withID(), withTimestamps()) {
+  static accessTokens = DbAccessTokensProvider.forModel(User, {
+    type: 'Bearer',
+    expiresIn: '30d',
+  })
 
   @column()
-  declare fullName: string | null
+  declare name: string
 
   @column()
   declare email: string
 
   @column({ serializeAs: null })
-  declare password: string
+  declare password: string | null
 
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  @column()
+  declare role: UserRoleEnum
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
+  @column.dateTime({ serializeAs: null })
+  declare verifiedAt: DateTime | null
 
-  static accessTokens = DbAccessTokensProvider.forModel(User)
+  @computed()
+  get isVerified() {
+    return !!this.verifiedAt
+  }
 }
