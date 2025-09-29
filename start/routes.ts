@@ -21,4 +21,4 @@ router
     router.post('login', [AuthController, 'login']).as('login')
   })
   .as('auth')
-  .prefix('auth')
+  .prefix('api/auth')
