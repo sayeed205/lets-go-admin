@@ -130,5 +130,24 @@ export default defineConfig({
   customSpec: {
     // Add custom OpenAPI specification here
     // This will be merged with the auto-generated specification
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'OAT',
+          description:
+            "Enter OAT Bearer token **_without_** the 'Bearer ' prefix that starts with 'oat_'.",
+        },
+      },
+      schemas: {},
+    },
+  },
+  components: {
+    /**
+     * Array of file paths or directory paths to include schemas
+     * Supports import aliases, patterns, files, and directories
+     */
+    include: ['#dtos/*'],
   },
 })
