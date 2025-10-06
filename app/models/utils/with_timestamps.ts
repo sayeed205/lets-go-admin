@@ -13,7 +13,7 @@ type ModelWithTimestampsClass<
   new (...args: any[]): ModelWithTimestampsRow
 }
 
-export function withTimestamps() {
+export default function withTimestamps() {
   return <T extends NormalizeConstructor<typeof BaseModel>>(
     superclass: T
   ): ModelWithTimestampsClass<T> => {

@@ -45,6 +45,10 @@ export default defineConfig({
       url: 'http://localhost:3333',
       description: 'Development server',
     },
+    {
+      url: 'https://local.iahmed.dpdns.org',
+      description: 'Local Development Server(Mobile)',
+    },
   ],
 
   /**

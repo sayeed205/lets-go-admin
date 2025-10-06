@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon'
 import { args, BaseCommand } from '@adonisjs/core/ace'
 
 import type { CommandOptions } from '@adonisjs/core/types/ace'
@@ -28,7 +29,13 @@ export default class MakeAdmin extends BaseCommand {
     }
     await User.updateOrCreate(
       { email: this.email },
-      { name: this.name, email: this.email, password: this.password, role: UserRoleEnum.ADMIN }
+      {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        role: UserRoleEnum.ADMIN,
+        verifiedAt: DateTime.now(),
+      }
     )
   }
 }

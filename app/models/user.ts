@@ -3,12 +3,12 @@ import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, column, computed } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
+import { DateTime } from 'luxon'
 
 import type { UserRoleEnum } from '#enums/user'
 
 import withID from '#models/utils/with_id'
-import { withTimestamps } from '#models/utils/with_timestamps'
-import { DateTime } from 'luxon'
+import withTimestamps from '#models/utils/with_timestamps'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],

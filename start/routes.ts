@@ -11,17 +11,17 @@ import router from '@adonisjs/core/services/router'
 
 import { middleware } from '#start/kernel'
 
-const AuthController = () => import('#controllers/auth_controller')
-
 /*
 |--------------------------------------------------------------------------
 | AUTH Routes
 |--------------------------------------------------------------------------
 */
+// const AuthController = () => import('#controllers/auth_controller')
 router
   .group(() => {
-    router.post('login', [AuthController, 'login']).as('login')
-    router.post('logout', [AuthController, 'logout']).as('logout').use(middleware.auth())
+    router.post('login', '#controllers/auth_controller.login').as('login')
+    router.post('logout', '#controllers/auth_controller.logout').as('logout').use(middleware.auth())
+    router.get('me', '#controllers/auth_controller.me').as('me').use(middleware.auth())
   })
   .as('auth')
   .prefix('api/auth')
