@@ -1,8 +1,5 @@
 import vine from '@vinejs/vine'
 
-export const loginBody = vine.object({
-  email: vine.string().email(),
-  password: vine.string().minLength(8).maxLength(32),
-})
+import { loginBody } from '#dtos/auth_dto'
 
 export const loginValidator = vine.compile(loginBody)

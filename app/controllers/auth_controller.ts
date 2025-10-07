@@ -7,10 +7,10 @@ import {
 
 import type { HttpContext } from '@adonisjs/core/http'
 
-import { loginBody, loginValidator } from '#validators/auth_validator'
+import { loginValidator } from '#validators/auth_validator'
 import User from '#models/user'
 import { messageBody } from '#dtos/common_dto'
-import { getMeResponse, loginResponse } from '#dtos/auth_dto'
+import { getMeResponse, loginBody, loginResponse } from '#dtos/auth_dto'
 
 export default class AuthController {
   @SwaggerInfo({

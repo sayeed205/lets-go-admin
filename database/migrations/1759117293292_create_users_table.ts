@@ -11,6 +11,8 @@ export default class extends BaseSchema {
       table.string('name').notNullable()
       table.string('email', 254).notNullable().unique()
       table.string('password').nullable()
+      table.string('phone_number').nullable()
+      table.timestamp('verified_at').nullable()
       table
         .enum('role', Object.values(UserRoleEnum), {
           schemaName: 'public',

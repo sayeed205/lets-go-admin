@@ -31,6 +31,9 @@ export default class User extends compose(BaseModel, AuthFinder, withID(), withT
   declare password: string | null
 
   @column()
+  declare phoneNumber: string
+
+  @column()
   declare role: UserRoleEnum
 
   @column.dateTime({ serializeAs: null })
