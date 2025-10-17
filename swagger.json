@@ -1,0 +1,418 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Lets-Go-Admin",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Auth"
+    }
+  ],
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "summary": "Login",
+        "deprecated": false,
+        "description": "Login to your account using email and password.",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginBody"
+              },
+              "example": {
+                "email": "sayeed205@gmail.com",
+                "password": "Abcd@1234"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/SuccessfulLogin"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "message": "Login successful",
+                  "data": {
+                    "type": "bearer",
+                    "name": null,
+                    "token": "oat_MQ.MVQ4TGpKNXBybGdqTEVBckxsUUdlcEVJV1FOY2xLMUJpTkw1eDFtQzI5NjkxMTYyNDA",
+                    "abilities": [
+                      "*"
+                    ],
+                    "lastUsedAt": null,
+                    "expiresAt": "2025-11-16T02:22:59.802Z"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                },
+                "example": {
+                  "message": "Invalid Credentials"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "summary": "Logout",
+        "deprecated": false,
+        "description": "Logout a user",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                },
+                "example": {
+                  "message": "Logout successfully"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                },
+                "example": {
+                  "message": "Unauthorized access"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "summary": "Me",
+        "deprecated": false,
+        "description": "Get information of currently logged in user",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Me"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "message": "Retried logged in user",
+                  "data": {
+                    "id": "dah38xs2weymojfrmlq0smgx",
+                    "name": "Sayed Ahmed",
+                    "email": "sayeed205@gmail.com",
+                    "phoneNumber": null,
+                    "role": "admin",
+                    "createdAt": "2025-10-07T09:02:17.009+05:30",
+                    "updatedAt": "2025-10-17T07:52:37.049+05:30",
+                    "isVerified": true
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                },
+                "example": {
+                  "message": "Unauthorized access"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "webhooks": {},
+  "components": {
+    "schemas": {
+      "LoginBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "examples": [
+              "sayeed205@gmail.com"
+            ]
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "examples": [
+              "Abcd@1234"
+            ],
+            "minLength": 8,
+            "maxLength": 32
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "SuccessfulLogin": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "examples": [
+              "bearer"
+            ]
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "token": {
+            "type": "string"
+          },
+          "abilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "lastUsedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "examples": [
+              "2025-11-16T02:22:59.802Z"
+            ]
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "examples": [
+              "2025-11-16T02:22:59.802Z"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "token",
+          "abilities",
+          "lastUsedAt",
+          "expiresAt"
+        ]
+      },
+      "Me": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "CUID",
+            "minLength": 25,
+            "maxLength": 25,
+            "examples": [
+              "dah38xs2weymojfrmlq0smgx"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "minLength": 255,
+            "examples": [
+              "Sayeed Ahmed"
+            ]
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254,
+            "examples": [
+              "sayeed205@gmail.com"
+            ]
+          },
+          "phoneNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "user"
+            ],
+            "examples": [
+              "admin",
+              "user"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "examples": [
+              "2025-10-07T09:02:17.009+05:30"
+            ]
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "examples": [
+              "2025-10-07T09:02:17.009+05:30"
+            ]
+          },
+          "isVerified": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "phoneNumber",
+          "role",
+          "createdAt",
+          "updatedAt",
+          "isVerified"
+        ]
+      },
+      "MessageBody": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "examples": [
+              "Invalid Credentials"
+            ]
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "rule": {
+                  "type": "string"
+                },
+                "field": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "errors"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": []
+}
