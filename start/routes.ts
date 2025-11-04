@@ -11,12 +11,16 @@ import router from '@adonisjs/core/services/router'
 
 import { middleware } from '#start/kernel'
 
+const AuthController = () => import('#controllers/auth_controller')
+const DocsController = () => import('#controllers/docs_controller')
+const ToursController = () => import('#controllers/tours_controller')
+const UsersController = () => import('#controllers/users_controller')
+const VouchersController = () => import('#controllers/vouchers_controller')
 /*
 |--------------------------------------------------------------------------
 | DOCS Routes
 |--------------------------------------------------------------------------
 */
-const DocsController = () => import('#controllers/docs_controller')
 router
   .group(() => {
     router.get('/docs', [DocsController, 'index']).as('index')
@@ -30,7 +34,6 @@ router
 | AUTH Routes
 |--------------------------------------------------------------------------
 */
-const AuthController = () => import('#controllers/auth_controller')
 router
   .group(() => {
     router.post('login', [AuthController, 'login']).as('login')
@@ -45,29 +48,18 @@ router
 | Tours Routes
 |--------------------------------------------------------------------------
 */
-const ToursController = () => import('#controllers/tours_controller')
 router
   .resource('api/tours', ToursController)
   .apiOnly()
   .except(['destroy'])
   .as('tours')
   .use('*', middleware.auth())
-router
-  .group(() => {
-    router.post('/', [ToursController, 'addUser']).as('users.create')
-    router.patch('/:id', [ToursController, 'updateTourUser']).as('users.update')
-    router.get('/:id', [ToursController, 'showTourUser']).as('users.show')
-  })
-  .use(middleware.auth())
-  .prefix('api/tours/users')
-  .as('tours')
 
 /*
 |--------------------------------------------------------------------------
 | Users Routes
 |--------------------------------------------------------------------------
 */
-const UsersController = () => import('#controllers/users_controller')
 router
   .resource('api/users', UsersController)
   .apiOnly()
@@ -80,17 +72,25 @@ router
 | Vouchers Routes
 |--------------------------------------------------------------------------
 */
-// const VouchersController = () => import('#controllers/vouchers_controller')
-// router
-//   .group(() => {
-//     router.get('/', [VouchersController, 'index']).as('index')
-//     router.post('/', [VouchersController, 'store']).as('store')
-//     router.get('/:id', [VouchersController, 'show']).as('show')
-//     router.patch('/:id', [VouchersController, 'update']).as('update')
-//     router.delete('/:id', [VouchersController, 'destroy']).as('destroy')
-//
-//     // Get vouchers for a specific tour booking
-//     router.get('/tour-user/:tourUserId', [VouchersController, 'getByTourUser']).as('byTourUser')
-//   })
-//   .as('vouchers')
-//   .prefix('/vouchers')
+router
+  .resource('api/vouchers', VouchersController)
+  .apiOnly()
+  .only(['store', 'show', 'update'])
+  .as('vouchers')
+  .use('*', middleware.auth())
+
+/*
+|--------------------------------------------------------------------------
+| Tour User Routes
+|--------------------------------------------------------------------------
+*/
+router
+  .group(() => {
+    router.post('/', [ToursController, 'addUser']).as('users.create')
+    router.patch('/:id', [ToursController, 'updateTourUser']).as('users.update')
+    router.get('/:id', [ToursController, 'showTourUser']).as('users.show')
+    router.get('/:id/vouchers', [VouchersController, 'index']).as('users.vouchers.index')
+  })
+  .use(middleware.auth())
+  .prefix('api/tour-user')
+  .as('tours')
