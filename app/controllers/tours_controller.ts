@@ -12,6 +12,7 @@ import {
   updateTourValidator,
 } from '#validators/tour_validator'
 import { Infer } from '@vinejs/vine/types'
+import User from '#models/user'
 
 export default class ToursController {
   async index({ response }: HttpContext) {
@@ -108,6 +109,24 @@ export default class ToursController {
     return response.ok({
       message: 'Tour updated successfully.',
       data: null,
+    })
+  }
+
+  async showTourUser({ params, response }: HttpContext) {
+    const tu = await db.from('tour_user').where('id', params.id).firstOrFail()
+    const tour = await Tour.find(tu.tour_id)
+    const user = await User.find(tu.user_id)
+    if (!tour) return response.notFound()
+    if (!user) return response.notFound()
+    delete tu.user_id
+    delete tu.tour_id
+    return response.ok({
+      message: 'Tour details',
+      data: {
+        ...tu,
+        tour,
+        user,
+      },
     })
   }
 

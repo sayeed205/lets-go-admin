@@ -56,6 +56,7 @@ router
   .group(() => {
     router.post('/', [ToursController, 'addUser']).as('users.create')
     router.patch('/:id', [ToursController, 'updateTourUser']).as('users.update')
+    router.get('/:id', [ToursController, 'showTourUser']).as('users.show')
   })
   .use(middleware.auth())
   .prefix('api/tours/users')
