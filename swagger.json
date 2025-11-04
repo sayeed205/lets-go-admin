@@ -8,6 +8,9 @@
   "tags": [
     {
       "name": "Auth"
+    },
+    {
+      "name": "Vouchers"
     }
   ],
   "paths": {
@@ -16,9 +19,7 @@
         "summary": "Login",
         "deprecated": false,
         "description": "Login to your account using email and password.",
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -49,10 +50,7 @@
                       "$ref": "#/components/schemas/SuccessfulLogin"
                     }
                   },
-                  "required": [
-                    "message",
-                    "data"
-                  ]
+                  "required": ["message", "data"]
                 },
                 "example": {
                   "message": "Login successful",
@@ -60,9 +58,7 @@
                     "type": "bearer",
                     "name": null,
                     "token": "oat_MQ.MVQ4TGpKNXBybGdqTEVBckxsUUdlcEVJV1FOY2xLMUJpTkw1eDFtQzI5NjkxMTYyNDA",
-                    "abilities": [
-                      "*"
-                    ],
+                    "abilities": ["*"],
                     "lastUsedAt": null,
                     "expiresAt": "2025-11-16T02:22:59.802Z"
                   }
@@ -105,9 +101,7 @@
         "summary": "Logout",
         "deprecated": false,
         "description": "Logout a user",
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "parameters": [],
         "responses": {
           "200": {
@@ -151,9 +145,7 @@
         "summary": "Me",
         "deprecated": false,
         "description": "Get information of currently logged in user",
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "parameters": [],
         "responses": {
           "200": {
@@ -170,10 +162,7 @@
                       "$ref": "#/components/schemas/Me"
                     }
                   },
-                  "required": [
-                    "message",
-                    "data"
-                  ]
+                  "required": ["message", "data"]
                 },
                 "example": {
                   "message": "Retried logged in user",
@@ -213,6 +202,531 @@
           }
         ]
       }
+    },
+    "/api/vouchers": {
+      "post": {
+        "summary": "Create Voucher",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vouchers"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bookingId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "examples": ["2024-10-17"]
+                  },
+                  "subBookingType": {
+                    "type": "string"
+                  },
+                  "propertyName": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "checkinDate": {
+                    "type": "string",
+                    "format": "date",
+                    "examples": ["2024-10-17"]
+                  },
+                  "checkoutDate": {
+                    "type": "string",
+                    "format": "date",
+                    "examples": ["2024-10-17"]
+                  },
+                  "roomType": {
+                    "type": "string"
+                  },
+                  "meal": {
+                    "type": "string"
+                  },
+                  "payment": {
+                    "type": "string"
+                  },
+                  "adultCount": {
+                    "type": "integer"
+                  },
+                  "childCount": {
+                    "type": "integer"
+                  },
+                  "confirmedBy": {
+                    "type": "string"
+                  },
+                  "hotelContact": {
+                    "type": "string"
+                  },
+                  "confirmerContact": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "bookingId",
+                  "name",
+                  "date",
+                  "subBookingType",
+                  "propertyName",
+                  "address",
+                  "checkinDate",
+                  "checkoutDate",
+                  "roomType",
+                  "meal",
+                  "payment",
+                  "adultCount",
+                  "childCount",
+                  "confirmedBy",
+                  "hotelContact",
+                  "confirmerContact"
+                ]
+              },
+              "example": {
+                "bookingId": "BK-2024-001",
+                "name": "John Doe",
+                "date": "2024-10-17",
+                "subBookingType": "Hotel Reservation",
+                "propertyName": "Grand Plaza Hotel",
+                "address": "123 Main Street, Downtown, City 12345",
+                "checkinDate": "2024-11-15",
+                "checkoutDate": "2024-11-18",
+                "roomType": "Deluxe Suite",
+                "meal": "Breakfast Included",
+                "payment": "Credit Card",
+                "adultCount": 2,
+                "childCount": 1,
+                "confirmedBy": "Jane Smith",
+                "hotelContact": "+1-555-0123",
+                "confirmerContact": "+1-555-0456"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Voucher"
+                    }
+                  },
+                  "required": ["message", "data"]
+                },
+                "example": {
+                  "message": "Voucher created successfully.",
+                  "data": {
+                    "bookingId": "BK-2024-001",
+                    "name": "John Doe",
+                    "date": "2024-10-17",
+                    "subBookingType": "Hotel Reservation",
+                    "propertyName": "Grand Plaza Hotel",
+                    "address": "123 Main Street, Downtown, City 12345",
+                    "checkinDate": "2024-11-15",
+                    "checkoutDate": "2024-11-18",
+                    "roomType": "Deluxe Suite",
+                    "meal": "Breakfast Included",
+                    "payment": "Credit Card",
+                    "adultCount": 2,
+                    "childCount": 1,
+                    "confirmedBy": "Jane Smith",
+                    "hotelContact": "+1-555-0123",
+                    "confirmerContact": "+1-555-0456",
+                    "id": "fkbo562gca2qtr3rw38ulijh",
+                    "createdAt": "2025-10-17T14:03:36.222+05:30",
+                    "updatedAt": "2025-10-17T14:03:36.222+05:30"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                },
+                "example": {
+                  "message": "Unauthorized access"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "All Vouchers",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vouchers"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Voucher"
+                      }
+                    }
+                  },
+                  "required": ["message", "data"]
+                },
+                "example": {
+                  "message": "List of booking vouchers",
+                  "data": [
+                    {
+                      "id": "i1u82rql7rdr76dfppde982j",
+                      "bookingId": "BK-2024-001",
+                      "name": "John Doe",
+                      "date": "2024-10-17",
+                      "subBookingType": "Hotel Reservation",
+                      "propertyName": "Grand Plaza Hotel",
+                      "address": "123 Main Street, Downtown, City 12345",
+                      "checkinDate": "2024-11-15",
+                      "checkoutDate": "2024-11-18",
+                      "roomType": "Deluxe Suite",
+                      "meal": "Breakfast Included",
+                      "payment": "Credit Card",
+                      "adultCount": 2,
+                      "childCount": 1,
+                      "confirmedBy": "Jane Smith",
+                      "hotelContact": "+1-555-0123",
+                      "confirmerContact": "+1-555-0456",
+                      "createdAt": "2025-10-17T11:19:55.880+05:30",
+                      "updatedAt": "2025-10-17T11:19:55.880+05:30"
+                    },
+                    {
+                      "id": "fkbo562gca2qtr3rw38ulijh",
+                      "bookingId": "BK-2024-001",
+                      "name": "John Doe",
+                      "date": "2024-10-17",
+                      "subBookingType": "Hotel Reservation",
+                      "propertyName": "Grand Plaza Hotel",
+                      "address": "123 Main Street, Downtown, City 12345",
+                      "checkinDate": "2024-11-15",
+                      "checkoutDate": "2024-11-18",
+                      "roomType": "Deluxe Suite",
+                      "meal": "Breakfast Included",
+                      "payment": "Credit Card",
+                      "adultCount": 2,
+                      "childCount": 1,
+                      "confirmedBy": "Jane Smith",
+                      "hotelContact": "+1-555-0123",
+                      "confirmerContact": "+1-555-0456",
+                      "createdAt": "2025-10-17T14:03:36.222+05:30",
+                      "updatedAt": "2025-10-17T14:03:36.222+05:30"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/vouchers/{id}": {
+      "patch": {
+        "summary": "Update Voucher",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vouchers"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "i1u82rql7rdr76dfppde982j",
+            "schema": {
+              "type": "string",
+              "maxLength": 25
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bookingId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "examples": ["2024-10-17"]
+                  },
+                  "subBookingType": {
+                    "type": "string"
+                  },
+                  "propertyName": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "checkinDate": {
+                    "type": "string",
+                    "format": "date",
+                    "examples": ["2024-10-17"]
+                  },
+                  "checkoutDate": {
+                    "type": "string",
+                    "format": "date",
+                    "examples": ["2024-10-17"]
+                  },
+                  "roomType": {
+                    "type": "string"
+                  },
+                  "meal": {
+                    "type": "string"
+                  },
+                  "payment": {
+                    "type": "string"
+                  },
+                  "adultCount": {
+                    "type": "integer"
+                  },
+                  "childCount": {
+                    "type": "integer"
+                  },
+                  "confirmedBy": {
+                    "type": "string"
+                  },
+                  "hotelContact": {
+                    "type": "string"
+                  },
+                  "confirmerContact": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Voucher"
+                    }
+                  },
+                  "required": ["message", "data"]
+                },
+                "example": {
+                  "message": "Booking voucher updated successfully.",
+                  "data": {
+                    "id": "i1u82rql7rdr76dfppde982j",
+                    "bookingId": "44",
+                    "name": "Byron Schamberger",
+                    "date": "2024-10-17",
+                    "subBookingType": "irure est",
+                    "propertyName": "Vivian Altenwerth",
+                    "address": "27873 Keanu Locks",
+                    "checkinDate": "2024-10-17",
+                    "checkoutDate": "2024-10-17",
+                    "roomType": "elit quis",
+                    "meal": "ipsum id enim",
+                    "payment": "ea velit laborum culpa sunt",
+                    "adultCount": 5,
+                    "childCount": 47,
+                    "confirmedBy": "fugiat Duis officia magna ad",
+                    "hotelContact": "commodo et ea elit magna",
+                    "confirmerContact": "ipsum voluptate magna est",
+                    "createdAt": "2025-10-17T11:19:55.880+05:30",
+                    "updatedAt": "2025-10-28T07:19:25.498+05:30"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                },
+                "example": {
+                  "errors": [
+                    {
+                      "message": "The adultCount field must be at least 1",
+                      "rule": "min",
+                      "field": "adultCount",
+                      "meta": {
+                        "min": 1
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "Get Voucher by ID",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vouchers"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "i1u82rql7rdr76dfppde982j",
+            "schema": {
+              "type": "string",
+              "maxLength": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Voucher"
+                    }
+                  },
+                  "required": ["message", "data"]
+                },
+                "example": {
+                  "message": "Booking voucher retrieved successfully.",
+                  "data": {
+                    "id": "i1u82rql7rdr76dfppde982j",
+                    "bookingId": "44",
+                    "name": "Byron Schamberger",
+                    "date": "2024-10-17",
+                    "subBookingType": "irure est",
+                    "propertyName": "Vivian Altenwerth",
+                    "address": "27873 Keanu Locks",
+                    "checkinDate": "2024-10-17",
+                    "checkoutDate": "2024-10-17",
+                    "roomType": "elit quis",
+                    "meal": "ipsum id enim",
+                    "payment": "ea velit laborum culpa sunt",
+                    "adultCount": 7,
+                    "childCount": 47,
+                    "confirmedBy": "fugiat Duis officia magna ad",
+                    "hotelContact": "commodo et ea elit magna",
+                    "confirmerContact": "ipsum voluptate magna est",
+                    "createdAt": "2025-10-17T11:19:55.880+05:30",
+                    "updatedAt": "2025-10-28T07:24:25.805+05:30"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
     }
   },
   "webhooks": {},
@@ -224,39 +738,27 @@
           "email": {
             "type": "string",
             "format": "email",
-            "examples": [
-              "sayeed205@gmail.com"
-            ]
+            "examples": ["sayeed205@gmail.com"]
           },
           "password": {
             "type": "string",
             "format": "password",
-            "examples": [
-              "Abcd@1234"
-            ],
+            "examples": ["Abcd@1234"],
             "minLength": 8,
             "maxLength": 32
           }
         },
-        "required": [
-          "email",
-          "password"
-        ]
+        "required": ["email", "password"]
       },
       "SuccessfulLogin": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "examples": [
-              "bearer"
-            ]
+            "examples": ["bearer"]
           },
           "name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "token": {
             "type": "string"
@@ -268,31 +770,17 @@
             }
           },
           "lastUsedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "format": "date-time",
-            "examples": [
-              "2025-11-16T02:22:59.802Z"
-            ]
+            "examples": ["2025-11-16T02:22:59.802Z"]
           },
           "expiresAt": {
             "type": "string",
             "format": "date-time",
-            "examples": [
-              "2025-11-16T02:22:59.802Z"
-            ]
+            "examples": ["2025-11-16T02:22:59.802Z"]
           }
         },
-        "required": [
-          "type",
-          "name",
-          "token",
-          "abilities",
-          "lastUsedAt",
-          "expiresAt"
-        ]
+        "required": ["type", "name", "token", "abilities", "lastUsedAt", "expiresAt"]
       },
       "Me": {
         "type": "object",
@@ -302,55 +790,36 @@
             "description": "CUID",
             "minLength": 25,
             "maxLength": 25,
-            "examples": [
-              "dah38xs2weymojfrmlq0smgx"
-            ]
+            "examples": ["dah38xs2weymojfrmlq0smgx"]
           },
           "name": {
             "type": "string",
             "minLength": 255,
-            "examples": [
-              "Sayeed Ahmed"
-            ]
+            "examples": ["Sayeed Ahmed"]
           },
           "email": {
             "type": "string",
             "format": "email",
             "maxLength": 254,
-            "examples": [
-              "sayeed205@gmail.com"
-            ]
+            "examples": ["sayeed205@gmail.com"]
           },
           "phoneNumber": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "role": {
             "type": "string",
-            "enum": [
-              "admin",
-              "user"
-            ],
-            "examples": [
-              "admin",
-              "user"
-            ]
+            "enum": ["admin", "user"],
+            "examples": ["admin", "user"]
           },
           "createdAt": {
             "type": "string",
             "format": "date-time",
-            "examples": [
-              "2025-10-07T09:02:17.009+05:30"
-            ]
+            "examples": ["2025-10-07T09:02:17.009+05:30"]
           },
           "updatedAt": {
             "type": "string",
             "format": "date-time",
-            "examples": [
-              "2025-10-07T09:02:17.009+05:30"
-            ]
+            "examples": ["2025-10-07T09:02:17.009+05:30"]
           },
           "isVerified": {
             "type": "boolean"
@@ -367,19 +836,108 @@
           "isVerified"
         ]
       },
+      "Voucher": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 25,
+            "examples": ["fkbo562gca2qtr3rw38ulijh"]
+          },
+          "bookingId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "examples": ["2024-10-17"]
+          },
+          "subBookingType": {
+            "type": "string"
+          },
+          "propertyName": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "checkinDate": {
+            "type": "string",
+            "format": "date",
+            "examples": ["2024-10-17"]
+          },
+          "checkoutDate": {
+            "type": "string",
+            "format": "date",
+            "examples": ["2024-10-17"]
+          },
+          "roomType": {
+            "type": "string"
+          },
+          "meal": {
+            "type": "string"
+          },
+          "payment": {
+            "type": "string"
+          },
+          "adultCount": {
+            "type": "integer"
+          },
+          "childCount": {
+            "type": "integer"
+          },
+          "confirmedBy": {
+            "type": "string"
+          },
+          "hotelContact": {
+            "type": "string"
+          },
+          "confirmerContact": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "bookingId",
+          "name",
+          "date",
+          "subBookingType",
+          "propertyName",
+          "address",
+          "checkinDate",
+          "checkoutDate",
+          "roomType",
+          "meal",
+          "payment",
+          "adultCount",
+          "childCount",
+          "confirmedBy",
+          "hotelContact",
+          "confirmerContact",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
       "MessageBody": {
         "type": "object",
         "properties": {
           "message": {
             "type": "string",
-            "examples": [
-              "Invalid Credentials"
-            ]
+            "examples": ["Invalid Credentials"]
           }
         },
-        "required": [
-          "message"
-        ]
+        "required": ["message"]
       },
       "ValidationError": {
         "type": "object",
@@ -402,9 +960,7 @@
             }
           }
         },
-        "required": [
-          "errors"
-        ]
+        "required": ["errors"]
       }
     },
     "securitySchemes": {
