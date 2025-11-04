@@ -13,6 +13,7 @@ import {
 } from '#validators/tour_validator'
 import { Infer } from '@vinejs/vine/types'
 import User from '#models/user'
+import Voucher from '#models/voucher'
 
 export default class ToursController {
   async index({ response }: HttpContext) {
@@ -116,6 +117,7 @@ export default class ToursController {
     const tu = await db.from('tour_user').where('id', params.id).firstOrFail()
     const tour = await Tour.find(tu.tour_id)
     const user = await User.find(tu.user_id)
+    const voucherCount = await Voucher.query().where('tour_user_id', tu.id).count('*')
     if (!tour) return response.notFound()
     if (!user) return response.notFound()
     delete tu.user_id
@@ -124,6 +126,7 @@ export default class ToursController {
       message: 'Tour details',
       data: {
         ...tu,
+        voucherCount: Number(voucherCount[0].$extras.count),
         tour,
         user,
       },

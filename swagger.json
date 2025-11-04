@@ -11,6 +11,15 @@
     },
     {
       "name": "Vouchers"
+    },
+    {
+      "name": "Tours"
+    },
+    {
+      "name": "Users"
+    },
+    {
+      "name": "Tour User"
     }
   ],
   "paths": {
@@ -29,7 +38,7 @@
               },
               "example": {
                 "email": "sayeed205@gmail.com",
-                "password": "Abcd@1234"
+                "password": "9015@Abcd"
               }
             }
           },
@@ -216,6 +225,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "tourUserId": {
+                    "type": "string"
+                  },
                   "bookingId": {
                     "type": "string"
                   },
@@ -223,9 +235,7 @@
                     "type": "string"
                   },
                   "date": {
-                    "type": "string",
-                    "format": "date",
-                    "examples": ["2024-10-17"]
+                    "type": "string"
                   },
                   "subBookingType": {
                     "type": "string"
@@ -238,15 +248,13 @@
                   },
                   "checkinDate": {
                     "type": "string",
-                    "format": "date",
-                    "examples": ["2024-10-17"]
+                    "format": "date"
                   },
                   "checkoutDate": {
                     "type": "string",
-                    "format": "date",
-                    "examples": ["2024-10-17"]
+                    "format": "date"
                   },
-                  "roomType": {
+                  "serviceType": {
                     "type": "string"
                   },
                   "meal": {
@@ -255,16 +263,10 @@
                   "payment": {
                     "type": "string"
                   },
-                  "adultCount": {
-                    "type": "integer"
-                  },
-                  "childCount": {
-                    "type": "integer"
-                  },
                   "confirmedBy": {
                     "type": "string"
                   },
-                  "hotelContact": {
+                  "serviceContact": {
                     "type": "string"
                   },
                   "confirmerContact": {
@@ -272,6 +274,7 @@
                   }
                 },
                 "required": [
+                  "tourUserId",
                   "bookingId",
                   "name",
                   "date",
@@ -280,32 +283,29 @@
                   "address",
                   "checkinDate",
                   "checkoutDate",
-                  "roomType",
+                  "serviceType",
                   "meal",
                   "payment",
-                  "adultCount",
-                  "childCount",
                   "confirmedBy",
-                  "hotelContact",
+                  "serviceContact",
                   "confirmerContact"
                 ]
               },
               "example": {
+                "tourUserId": "vz2v78oilpbnnbai2jbpzzql",
                 "bookingId": "BK-2024-001",
                 "name": "John Doe",
                 "date": "2024-10-17",
                 "subBookingType": "Hotel Reservation",
                 "propertyName": "Grand Plaza Hotel",
                 "address": "123 Main Street, Downtown, City 12345",
-                "checkinDate": "2024-11-15",
-                "checkoutDate": "2024-11-18",
-                "roomType": "Deluxe Suite",
+                "checkinDate": "2024-10-17",
+                "checkoutDate": "2024-10-17",
+                "serviceType": "Deluxe Suite",
                 "meal": "Breakfast Included",
                 "payment": "Credit Card",
-                "adultCount": 2,
-                "childCount": 1,
                 "confirmedBy": "Jane Smith",
-                "hotelContact": "+1-555-0123",
+                "serviceContact": "+1-555-0123",
                 "confirmerContact": "+1-555-0456"
               }
             }
@@ -377,90 +377,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ValidationError"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
-      },
-      "get": {
-        "summary": "All Vouchers",
-        "deprecated": false,
-        "description": "",
-        "tags": ["Vouchers"],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Voucher"
-                      }
-                    }
-                  },
-                  "required": ["message", "data"]
-                },
-                "example": {
-                  "message": "List of booking vouchers",
-                  "data": [
-                    {
-                      "id": "i1u82rql7rdr76dfppde982j",
-                      "bookingId": "BK-2024-001",
-                      "name": "John Doe",
-                      "date": "2024-10-17",
-                      "subBookingType": "Hotel Reservation",
-                      "propertyName": "Grand Plaza Hotel",
-                      "address": "123 Main Street, Downtown, City 12345",
-                      "checkinDate": "2024-11-15",
-                      "checkoutDate": "2024-11-18",
-                      "roomType": "Deluxe Suite",
-                      "meal": "Breakfast Included",
-                      "payment": "Credit Card",
-                      "adultCount": 2,
-                      "childCount": 1,
-                      "confirmedBy": "Jane Smith",
-                      "hotelContact": "+1-555-0123",
-                      "confirmerContact": "+1-555-0456",
-                      "createdAt": "2025-10-17T11:19:55.880+05:30",
-                      "updatedAt": "2025-10-17T11:19:55.880+05:30"
-                    },
-                    {
-                      "id": "fkbo562gca2qtr3rw38ulijh",
-                      "bookingId": "BK-2024-001",
-                      "name": "John Doe",
-                      "date": "2024-10-17",
-                      "subBookingType": "Hotel Reservation",
-                      "propertyName": "Grand Plaza Hotel",
-                      "address": "123 Main Street, Downtown, City 12345",
-                      "checkinDate": "2024-11-15",
-                      "checkoutDate": "2024-11-18",
-                      "roomType": "Deluxe Suite",
-                      "meal": "Breakfast Included",
-                      "payment": "Credit Card",
-                      "adultCount": 2,
-                      "childCount": 1,
-                      "confirmedBy": "Jane Smith",
-                      "hotelContact": "+1-555-0123",
-                      "confirmerContact": "+1-555-0456",
-                      "createdAt": "2025-10-17T14:03:36.222+05:30",
-                      "updatedAt": "2025-10-17T14:03:36.222+05:30"
-                    }
-                  ]
                 }
               }
             },
@@ -676,7 +592,87 @@
                       "type": "string"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/Voucher"
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "tourUserId": {
+                          "type": "string"
+                        },
+                        "bookingId": {
+                          "type": "string"
+                        },
+                        "date": {
+                          "type": "string"
+                        },
+                        "subBookingType": {
+                          "type": "string"
+                        },
+                        "propertyName": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "checkinDate": {
+                          "type": "string"
+                        },
+                        "checkoutDate": {
+                          "type": "string"
+                        },
+                        "serviceType": {
+                          "type": ["string", "null"]
+                        },
+                        "meal": {
+                          "type": "string"
+                        },
+                        "payment": {
+                          "type": "string"
+                        },
+                        "confirmedBy": {
+                          "type": "string"
+                        },
+                        "serviceContact": {
+                          "type": ["string", "null"]
+                        },
+                        "confirmerContact": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "$ref": "#/components/schemas/User"
+                        },
+                        "tour": {
+                          "$ref": "#/components/schemas/Tour"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "tourUserId",
+                        "bookingId",
+                        "date",
+                        "subBookingType",
+                        "propertyName",
+                        "address",
+                        "checkinDate",
+                        "checkoutDate",
+                        "serviceType",
+                        "meal",
+                        "payment",
+                        "confirmedBy",
+                        "serviceContact",
+                        "confirmerContact",
+                        "createdAt",
+                        "updatedAt",
+                        "user",
+                        "tour"
+                      ]
                     }
                   },
                   "required": ["message", "data"]
@@ -726,6 +722,919 @@
             "bearer": []
           }
         ]
+      }
+    },
+    "/api/tours": {
+      "get": {
+        "summary": "Get All Tours",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Tours"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "message": "List of tours",
+                  "data": [
+                    {
+                      "id": "i2e0venc1qwzjsraaeii4jcz",
+                      "name": "Darjeeling may 2026",
+                      "createdAt": "2025-11-04T11:29:12.192+05:30",
+                      "updatedAt": "2025-11-04T11:29:12.192+05:30",
+                      "usersCount": 0
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-200-2": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Tour"
+                      }
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a tour",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Tours"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "example": {
+                "name": "Darjeeling may 2026"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Tour"
+                    }
+                  },
+                  "required": ["message", "data"]
+                },
+                "example": {
+                  "message": "Tour created successfully.",
+                  "data": {
+                    "name": "Darjeeling may 2026",
+                    "id": "i2e0venc1qwzjsraaeii4jcz",
+                    "createdAt": "2025-11-04T11:29:12.192+05:30",
+                    "updatedAt": "2025-11-04T11:29:12.192+05:30",
+                    "usersCount": null
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/tours/{id}": {
+      "get": {
+        "summary": "Tour by ID",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Tours"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "aciqdwz08w8xclu3k9fvzpkj",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/User"
+                          }
+                        }
+                      },
+                      "required": ["id", "name", "createdAt", "updatedAt", "users"]
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/users": {
+      "get": {
+        "summary": "Get All Users",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Users"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a user",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Users"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "example": {
+                "name": "Rahul",
+                "email": "dgd@god.com",
+                "phoneNumber": "9966996699"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "phoneNumber": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "isVerified": {
+                          "type": "boolean"
+                        },
+                        "toursCount": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "email",
+                        "phoneNumber",
+                        "id",
+                        "createdAt",
+                        "updatedAt",
+                        "isVerified",
+                        "toursCount"
+                      ]
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                },
+                "example": {
+                  "errors": [
+                    {
+                      "message": "The email has already been taken",
+                      "rule": "database.unique",
+                      "field": "email"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "summary": "User by ID",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "ia002559j7ju2gybhk6yribs",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "phoneNumber": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "tours": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Tour"
+                          }
+                        },
+                        "isVerified": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "email",
+                        "phoneNumber",
+                        "role",
+                        "createdAt",
+                        "updatedAt",
+                        "tours",
+                        "isVerified"
+                      ]
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-200-2": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "phoneNumber": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "tours": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Tour"
+                          }
+                        },
+                        "isVerified": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "email",
+                        "phoneNumber",
+                        "role",
+                        "createdAt",
+                        "updatedAt",
+                        "tours",
+                        "isVerified"
+                      ]
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/tour-user": {
+      "post": {
+        "summary": "Add user to tour",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Tour User"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "example": {
+                "tourId": "aciqdwz08w8xclu3k9fvzpkj",
+                "userId": "ia002559j7ju2gybhk6yribs",
+                "totalCost": 18500,
+                "adultCount": 2,
+                "adultCost": 8000,
+                "adultGst": 18,
+                "childCount": 1,
+                "childCost": 2500,
+                "childGst": 12,
+                "discountAmount": 500
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/tour-user/{id}": {
+      "patch": {
+        "summary": "Update a tour user",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Tour User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "ddi3zbv45837k6mw77s4qjdm",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "totalCost": {
+                    "type": "integer"
+                  },
+                  "adultCount": {
+                    "type": "integer"
+                  },
+                  "adultCost": {
+                    "type": "integer"
+                  },
+                  "adultGst": {
+                    "type": "integer"
+                  },
+                  "childCount": {
+                    "type": "integer"
+                  },
+                  "childCost": {
+                    "type": "integer"
+                  },
+                  "childGst": {
+                    "type": "integer"
+                  },
+                  "discountAmount": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "example": {
+                "totalCost": 18500,
+                "adultCount": 2,
+                "adultCost": 8000,
+                "adultGst": 18,
+                "childCount": 1,
+                "childCost": 2500,
+                "childGst": 12,
+                "discountAmount": 2323
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "Get Tour Details for an user",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Tour User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "vz2v78oilpbnnbai2jbpzzql",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "total_cost": {
+                          "type": "integer"
+                        },
+                        "received_amount": {
+                          "type": "integer"
+                        },
+                        "discount_amount": {
+                          "type": "integer"
+                        },
+                        "adult_count": {
+                          "type": "integer"
+                        },
+                        "adult_cost": {
+                          "type": "integer"
+                        },
+                        "adult_gst": {
+                          "type": "integer"
+                        },
+                        "child_count": {
+                          "type": "integer"
+                        },
+                        "child_cost": {
+                          "type": "integer"
+                        },
+                        "child_gst": {
+                          "type": "integer"
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "updated_at": {
+                          "type": "string"
+                        },
+                        "voucherCount": {
+                          "type": "integer"
+                        },
+                        "tour": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            }
+                          },
+                          "required": ["id", "name", "createdAt", "updatedAt"]
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "phoneNumber": {
+                              "type": "string"
+                            },
+                            "role": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            },
+                            "isVerified": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "email",
+                            "phoneNumber",
+                            "role",
+                            "createdAt",
+                            "updatedAt",
+                            "isVerified"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "total_cost",
+                        "received_amount",
+                        "discount_amount",
+                        "adult_count",
+                        "adult_cost",
+                        "adult_gst",
+                        "child_count",
+                        "child_cost",
+                        "child_gst",
+                        "created_at",
+                        "updated_at",
+                        "voucherCount",
+                        "tour",
+                        "user"
+                      ]
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/tour-user/{id}/vouchers": {
+      "get": {
+        "summary": "Get Tour User Vouchers",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Tour User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "vz2v78oilpbnnbai2jbpzzql",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Voucher"
+                      }
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
       }
     }
   },
@@ -840,20 +1749,17 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "maxLength": 25,
-            "examples": ["fkbo562gca2qtr3rw38ulijh"]
+            "type": "string"
+          },
+          "tourUserId": {
+            "type": "string"
           },
           "bookingId": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
-          },
           "date": {
             "type": "string",
-            "format": "date",
-            "examples": ["2024-10-17"]
+            "format": "date"
           },
           "subBookingType": {
             "type": "string"
@@ -866,15 +1772,13 @@
           },
           "checkinDate": {
             "type": "string",
-            "format": "date",
-            "examples": ["2024-10-17"]
+            "format": "date"
           },
           "checkoutDate": {
             "type": "string",
-            "format": "date",
-            "examples": ["2024-10-17"]
+            "format": "date"
           },
-          "roomType": {
+          "serviceType": {
             "type": "string"
           },
           "meal": {
@@ -883,16 +1787,10 @@
           "payment": {
             "type": "string"
           },
-          "adultCount": {
-            "type": "integer"
-          },
-          "childCount": {
-            "type": "integer"
-          },
           "confirmedBy": {
             "type": "string"
           },
-          "hotelContact": {
+          "serviceContact": {
             "type": "string"
           },
           "confirmerContact": {
@@ -908,25 +1806,93 @@
           }
         },
         "required": [
+          "id",
+          "tourUserId",
           "bookingId",
-          "name",
           "date",
           "subBookingType",
           "propertyName",
           "address",
           "checkinDate",
           "checkoutDate",
-          "roomType",
+          "serviceType",
           "meal",
           "payment",
-          "adultCount",
-          "childCount",
           "confirmedBy",
-          "hotelContact",
+          "serviceContact",
           "confirmerContact",
-          "id",
           "createdAt",
           "updatedAt"
+        ]
+      },
+      "Tour": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usersCount": {
+            "type": "integer"
+          }
+        },
+        "required": ["name", "id", "createdAt", "updatedAt", "usersCount"]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": ["string", "null"]
+          },
+          "role": {
+            "type": "string",
+            "enum": ["admin", "user"],
+            "default": "user"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isVerified": {
+            "type": "boolean"
+          },
+          "toursCount": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "phoneNumber",
+          "role",
+          "createdAt",
+          "updatedAt",
+          "isVerified",
+          "toursCount"
         ]
       },
       "MessageBody": {
