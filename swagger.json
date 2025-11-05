@@ -1487,6 +1487,9 @@
                         "voucherCount": {
                           "type": "integer"
                         },
+                        "receiptCount": {
+                          "type": "integer"
+                        },
                         "tour": {
                           "type": "object",
                           "properties": {
@@ -1559,6 +1562,7 @@
                         "created_at",
                         "updated_at",
                         "voucherCount",
+                        "receiptCount",
                         "tour",
                         "user"
                       ]
