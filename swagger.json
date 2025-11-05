@@ -31,7 +31,7 @@
         "summary": "Login",
         "deprecated": false,
         "description": "Login to your account using email and password.",
-        "tags": ["Auth"],
+        "tags": ["Auth", "Auth"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -113,7 +113,7 @@
         "summary": "Logout",
         "deprecated": false,
         "description": "Logout a user",
-        "tags": ["Auth"],
+        "tags": ["Auth", "Auth"],
         "parameters": [],
         "responses": {
           "200": {
@@ -145,11 +145,7 @@
             "headers": {}
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+        "security": []
       }
     },
     "/api/auth/me": {
@@ -157,7 +153,7 @@
         "summary": "Me",
         "deprecated": false,
         "description": "Get information of currently logged in user",
-        "tags": ["Auth"],
+        "tags": ["Auth", "Auth"],
         "parameters": [],
         "responses": {
           "200": {
@@ -208,11 +204,7 @@
             "headers": {}
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+        "security": []
       }
     },
     "/api/vouchers": {
@@ -220,7 +212,7 @@
         "summary": "Create Voucher",
         "deprecated": false,
         "description": "",
-        "tags": ["Vouchers"],
+        "tags": ["Vouchers", "Vouchers"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -398,7 +390,7 @@
         "summary": "Update Voucher",
         "deprecated": false,
         "description": "",
-        "tags": ["Vouchers"],
+        "tags": ["Vouchers", "Vouchers"],
         "parameters": [
           {
             "name": "id",
@@ -473,8 +465,7 @@
                     "type": "string"
                   }
                 }
-              },
-              "examples": {}
+              }
             }
           },
           "required": true
@@ -569,7 +560,7 @@
         "summary": "Get Voucher by ID",
         "deprecated": false,
         "description": "",
-        "tags": ["Vouchers"],
+        "tags": ["Vouchers", "Vouchers"],
         "parameters": [
           {
             "name": "id",
@@ -732,7 +723,7 @@
         "summary": "Get All Tours",
         "deprecated": false,
         "description": "",
-        "tags": ["Tours"],
+        "tags": ["Tours", "Tours"],
         "parameters": [],
         "responses": {
           "200": {
@@ -793,7 +784,7 @@
         "summary": "Create a tour",
         "deprecated": false,
         "description": "",
-        "tags": ["Tours"],
+        "tags": ["Tours", "Tours"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -858,7 +849,11 @@
             "headers": {}
           }
         },
-        "security": []
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/api/tours/{id}": {
@@ -866,7 +861,7 @@
         "summary": "Tour by ID",
         "deprecated": false,
         "description": "",
-        "tags": ["Tours"],
+        "tags": ["Tours", "Tours"],
         "parameters": [
           {
             "name": "id",
@@ -934,7 +929,7 @@
         "summary": "Get All Users",
         "deprecated": false,
         "description": "",
-        "tags": ["Users"],
+        "tags": ["Users", "Users"],
         "parameters": [],
         "responses": {
           "200": {
@@ -982,7 +977,7 @@
         "summary": "Create a user",
         "deprecated": false,
         "description": "",
-        "tags": ["Users"],
+        "tags": ["Users", "Users"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -1101,7 +1096,7 @@
         "summary": "User by ID",
         "deprecated": false,
         "description": "",
-        "tags": ["Users"],
+        "tags": ["Users", "Users"],
         "parameters": [
           {
             "name": "id",
@@ -1254,7 +1249,7 @@
         "summary": "Add user to tour",
         "deprecated": false,
         "description": "",
-        "tags": ["Tour User"],
+        "tags": ["Tour User", "Tour User"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -1313,7 +1308,7 @@
         "summary": "Update a tour user",
         "deprecated": false,
         "description": "",
-        "tags": ["Tour User"],
+        "tags": ["Tour User", "Tour User"],
         "parameters": [
           {
             "name": "id",
@@ -1426,7 +1421,7 @@
         "summary": "Get Tour Details for an user",
         "deprecated": false,
         "description": "",
-        "tags": ["Tour User"],
+        "tags": ["Tour User", "Tour User"],
         "parameters": [
           {
             "name": "id",
@@ -1599,7 +1594,7 @@
         "summary": "Get Tour User Vouchers",
         "deprecated": false,
         "description": "",
-        "tags": ["Tour User"],
+        "tags": ["Tour User", "Tour User"],
         "parameters": [
           {
             "name": "id",
@@ -1637,7 +1632,11 @@
             "headers": {}
           }
         },
-        "security": []
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/api/tour-user/{id}/receipts": {
@@ -1645,7 +1644,7 @@
         "summary": "Get Tour User Receipts",
         "deprecated": false,
         "description": "Get all receipts linked to a specific tour user",
-        "tags": ["Receipts"],
+        "tags": ["Receipts", "Receipts"],
         "parameters": [
           {
             "name": "id",
@@ -1683,7 +1682,11 @@
             "headers": {}
           }
         },
-        "security": []
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/api/receipts": {
@@ -1691,7 +1694,7 @@
         "summary": "Create Receipt",
         "deprecated": false,
         "description": "Create a new payment receipt for a tour booking.",
-        "tags": ["Receipts"],
+        "tags": ["Receipts", "Receipts"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -1804,7 +1807,7 @@
         "summary": "Update Receipt",
         "deprecated": false,
         "description": "Update details of an existing payment receipt.",
-        "tags": ["Receipts"],
+        "tags": ["Receipts", "Receipts"],
         "parameters": [
           {
             "name": "id",
@@ -1917,7 +1920,7 @@
         "summary": "Get Receipt by ID",
         "deprecated": false,
         "description": "Fetch a payment receipt and its related tour and user info.",
-        "tags": ["Receipts"],
+        "tags": ["Receipts", "Receipts"],
         "parameters": [
           {
             "name": "id",
@@ -1944,16 +1947,45 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "id": { "type": "integer", "example": 1 },
-                        "tourUserId": { "type": "string", "example": "vz2v78oilpbnnbai2jbpzzql" },
-                        "date": { "type": "string", "format": "date", "example": "2024-10-17" },
-                        "amount": { "type": "integer", "example": 9200 },
-                        "method": { "type": "string", "example": "Cheque" },
-                        "methodInfo": { "type": "string", "example": "Cheque #003487" },
-                        "createdAt": { "type": "string", "format": "date-time" },
-                        "updatedAt": { "type": "string", "format": "date-time" },
-                        "user": { "$ref": "#/components/schemas/User" },
-                        "tour": { "$ref": "#/components/schemas/Tour" }
+                        "id": {
+                          "type": "integer",
+                          "examples": [1]
+                        },
+                        "tourUserId": {
+                          "type": "string",
+                          "examples": ["vz2v78oilpbnnbai2jbpzzql"]
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date",
+                          "examples": ["2024-10-17"]
+                        },
+                        "amount": {
+                          "type": "integer",
+                          "examples": [9200]
+                        },
+                        "method": {
+                          "type": "string",
+                          "examples": ["Cheque"]
+                        },
+                        "methodInfo": {
+                          "type": "string",
+                          "examples": ["Cheque #003487"]
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "user": {
+                          "$ref": "#/components/schemas/User"
+                        },
+                        "tour": {
+                          "$ref": "#/components/schemas/Tour"
+                        }
                       },
                       "required": [
                         "id",
@@ -2028,6 +2060,16 @@
   "webhooks": {},
   "components": {
     "schemas": {
+      "MessageBody": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "examples": ["Invalid Credentials"]
+          }
+        },
+        "required": ["message"]
+      },
       "LoginBody": {
         "type": "object",
         "properties": {
@@ -2077,6 +2119,29 @@
           }
         },
         "required": ["type", "name", "token", "abilities", "lastUsedAt", "expiresAt"]
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "rule": {
+                  "type": "string"
+                },
+                "field": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": ["errors"]
       },
       "Me": {
         "type": "object",
@@ -2131,48 +2196,6 @@
           "updatedAt",
           "isVerified"
         ]
-      },
-      "Receipt": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "example": 1
-          },
-          "tourUserId": {
-            "type": "string",
-            "maxLength": 25,
-            "example": "vz2v78oilpbnnbai2jbpzzql"
-          },
-          "date": {
-            "type": "string",
-            "format": "date",
-            "example": "2024-10-17"
-          },
-          "amount": {
-            "type": "integer",
-            "example": 8500
-          },
-          "method": {
-            "type": "string",
-            "maxLength": 255,
-            "example": "Cash"
-          },
-          "methodInfo": {
-            "type": "string",
-            "maxLength": 255,
-            "example": "Cheque #003487"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": ["id", "tourUserId", "date", "amount", "method", "createdAt", "updatedAt"]
       },
       "Voucher": {
         "type": "object",
@@ -2324,38 +2347,47 @@
           "toursCount"
         ]
       },
-      "MessageBody": {
+      "Receipt": {
         "type": "object",
         "properties": {
-          "message": {
+          "id": {
+            "type": "integer",
+            "examples": [1]
+          },
+          "tourUserId": {
             "type": "string",
-            "examples": ["Invalid Credentials"]
+            "maxLength": 25,
+            "examples": ["vz2v78oilpbnnbai2jbpzzql"]
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "examples": ["2024-10-17"]
+          },
+          "amount": {
+            "type": "integer",
+            "examples": [8500]
+          },
+          "method": {
+            "type": "string",
+            "maxLength": 255,
+            "examples": ["Cash"]
+          },
+          "methodInfo": {
+            "type": "string",
+            "maxLength": 255,
+            "examples": ["Cheque #003487"]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         },
-        "required": ["message"]
-      },
-      "ValidationError": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "rule": {
-                  "type": "string"
-                },
-                "field": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "required": ["errors"]
+        "required": ["id", "tourUserId", "date", "amount", "method", "createdAt", "updatedAt"]
       }
     },
     "securitySchemes": {
