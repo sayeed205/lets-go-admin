@@ -16,6 +16,8 @@ const DocsController = () => import('#controllers/docs_controller')
 const ToursController = () => import('#controllers/tours_controller')
 const UsersController = () => import('#controllers/users_controller')
 const VouchersController = () => import('#controllers/vouchers_controller')
+const ReceiptController = () => import('#controllers/receipts_controller')
+
 /*
 |--------------------------------------------------------------------------
 | DOCS Routes
@@ -81,6 +83,18 @@ router
 
 /*
 |--------------------------------------------------------------------------
+| Receipts Routes
+|--------------------------------------------------------------------------
+*/
+router
+  .resource('api/receipts', ReceiptController)
+  .apiOnly()
+  .only(['store', 'show', 'update'])
+  .as('receipts')
+  .use('*', middleware.auth())
+
+/*
+|--------------------------------------------------------------------------
 | Tour User Routes
 |--------------------------------------------------------------------------
 */
@@ -90,6 +104,7 @@ router
     router.patch('/:id', [ToursController, 'updateTourUser']).as('users.update')
     router.get('/:id', [ToursController, 'showTourUser']).as('users.show')
     router.get('/:id/vouchers', [VouchersController, 'index']).as('users.vouchers.index')
+    router.get('/:id/receipts', [ReceiptController, 'index']).as('users.receipts.index')
   })
   .use(middleware.auth())
   .prefix('api/tour-user')

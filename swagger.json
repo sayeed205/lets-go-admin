@@ -20,6 +20,9 @@
     },
     {
       "name": "Tour User"
+    },
+    {
+      "name": "Receipts"
     }
   ],
   "paths": {
@@ -1636,6 +1639,390 @@
         },
         "security": []
       }
+    },
+    "/api/tour-user/{id}/receipts": {
+      "get": {
+        "summary": "Get Tour User Receipts",
+        "deprecated": false,
+        "description": "Get all receipts linked to a specific tour user",
+        "tags": ["Receipts"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "vz2v78oilpbnnbai2jbpzzql",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Receipt"
+                      }
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/receipts": {
+      "post": {
+        "summary": "Create Receipt",
+        "deprecated": false,
+        "description": "Create a new payment receipt for a tour booking.",
+        "tags": ["Receipts"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tourUserId": {
+                    "type": "string",
+                    "maxLength": 25
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "method": {
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "methodInfo": {
+                    "type": "string",
+                    "maxLength": 255
+                  }
+                },
+                "required": ["tourUserId", "date", "amount", "method"]
+              },
+              "example": {
+                "tourUserId": "vz2v78oilpbnnbai2jbpzzql",
+                "date": "2024-10-17",
+                "amount": 8500,
+                "method": "Cash",
+                "methodInfo": "Reference No. #123333"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Receipt"
+                    }
+                  },
+                  "required": ["message", "data"]
+                },
+                "example": {
+                  "message": "Receipt created successfully.",
+                  "data": {
+                    "id": 1,
+                    "tourUserId": "vz2v78oilpbnnbai2jbpzzql",
+                    "date": "2024-10-17",
+                    "amount": 8500,
+                    "method": "Cash",
+                    "methodInfo": "Reference No. #123333",
+                    "createdAt": "2025-10-17T14:03:36.222+05:30",
+                    "updatedAt": "2025-10-17T14:03:36.222+05:30"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                },
+                "example": {
+                  "message": "Unauthorized access"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/receipts/{id}": {
+      "patch": {
+        "summary": "Update Receipt",
+        "deprecated": false,
+        "description": "Update details of an existing payment receipt.",
+        "tags": ["Receipts"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "method": {
+                    "type": "string"
+                  },
+                  "methodInfo": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "amount": 9200,
+                "method": "Cheque",
+                "methodInfo": "Cheque #003487"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Receipt"
+                    }
+                  },
+                  "required": ["message", "data"]
+                },
+                "example": {
+                  "message": "Receipt updated successfully.",
+                  "data": {
+                    "id": 1,
+                    "tourUserId": "vz2v78oilpbnnbai2jbpzzql",
+                    "date": "2024-10-17",
+                    "amount": 9200,
+                    "method": "Cheque",
+                    "methodInfo": "Cheque #003487",
+                    "createdAt": "2025-10-17T14:03:36.222+05:30",
+                    "updatedAt": "2025-10-17T14:43:36.333+05:30"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                },
+                "example": {
+                  "message": "Unauthorized access"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "Get Receipt by ID",
+        "deprecated": false,
+        "description": "Fetch a payment receipt and its related tour and user info.",
+        "tags": ["Receipts"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "integer", "example": 1 },
+                        "tourUserId": { "type": "string", "example": "vz2v78oilpbnnbai2jbpzzql" },
+                        "date": { "type": "string", "format": "date", "example": "2024-10-17" },
+                        "amount": { "type": "integer", "example": 9200 },
+                        "method": { "type": "string", "example": "Cheque" },
+                        "methodInfo": { "type": "string", "example": "Cheque #003487" },
+                        "createdAt": { "type": "string", "format": "date-time" },
+                        "updatedAt": { "type": "string", "format": "date-time" },
+                        "user": { "$ref": "#/components/schemas/User" },
+                        "tour": { "$ref": "#/components/schemas/Tour" }
+                      },
+                      "required": [
+                        "id",
+                        "tourUserId",
+                        "date",
+                        "amount",
+                        "method",
+                        "createdAt",
+                        "updatedAt",
+                        "user",
+                        "tour"
+                      ]
+                    }
+                  },
+                  "required": ["message", "data"]
+                },
+                "example": {
+                  "message": "Receipt retrieved successfully.",
+                  "data": {
+                    "id": 1,
+                    "tourUserId": "vz2v78oilpbnnbai2jbpzzql",
+                    "date": "2024-10-17",
+                    "amount": 9200,
+                    "method": "Cheque",
+                    "methodInfo": "Cheque #003487",
+                    "createdAt": "2025-10-17T14:03:36.222+05:30",
+                    "updatedAt": "2025-10-17T14:43:36.333+05:30",
+                    "user": {
+                      "id": "dah38xs2weymojfrmlq0smgx",
+                      "name": "Sayed Ahmed",
+                      "email": "sayeed205@gmail.com",
+                      "phoneNumber": null,
+                      "role": "admin",
+                      "createdAt": "2025-10-07T09:02:17.009+05:30",
+                      "updatedAt": "2025-10-17T07:52:37.049+05:30",
+                      "isVerified": true,
+                      "toursCount": 1
+                    },
+                    "tour": {
+                      "id": "i2e0venc1qwzjsraaeii4jcz",
+                      "name": "Darjeeling may 2026",
+                      "createdAt": "2025-11-04T11:29:12.192+05:30",
+                      "updatedAt": "2025-11-04T11:29:12.192+05:30",
+                      "usersCount": 2
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
     }
   },
   "webhooks": {},
@@ -1744,6 +2131,48 @@
           "updatedAt",
           "isVerified"
         ]
+      },
+      "Receipt": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "tourUserId": {
+            "type": "string",
+            "maxLength": 25,
+            "example": "vz2v78oilpbnnbai2jbpzzql"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-10-17"
+          },
+          "amount": {
+            "type": "integer",
+            "example": 8500
+          },
+          "method": {
+            "type": "string",
+            "maxLength": 255,
+            "example": "Cash"
+          },
+          "methodInfo": {
+            "type": "string",
+            "maxLength": 255,
+            "example": "Cheque #003487"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["id", "tourUserId", "date", "amount", "method", "createdAt", "updatedAt"]
       },
       "Voucher": {
         "type": "object",
