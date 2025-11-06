@@ -20,6 +20,14 @@ ADD . .
 RUN node ace build
 
 # Production stage
+ARG TZ
+ARG PORT
+ARG HOST
+ARG LOG_LEVEL
+ARG APP_KEY
+ARG NODE_ENV
+ARG DATABASE_URL
+
 FROM base
 ENV NODE_ENV=production
 WORKDIR /app
