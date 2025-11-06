@@ -33,7 +33,8 @@ export default class DocsController {
     `)
   }
 
-  async json({ response }: HttpContext) {
+  async json({ response, logger }: HttpContext) {
+    logger.debug(app.appRoot, 'app root')
     const { default: data } = await import(app.appRoot + 'swagger.json', { with: { type: 'json' } })
     return response.ok(data)
   }
