@@ -13,7 +13,7 @@ export const createReceiptValidator = vine.compile(
     date,
     amount,
     method,
-    methodInfo
+    methodInfo,
   })
 )
 
@@ -22,6 +22,6 @@ export const updateReceiptValidator = vine.compile(
     date: date.optional(),
     amount: amount.optional(),
     method: method.optional(),
-    methodInfo
+    methodInfo,
   })
 )

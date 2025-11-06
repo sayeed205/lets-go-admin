@@ -732,7 +732,18 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {}
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Tour"
+                      }
+                    }
+                  },
+                  "required": ["message", "data"]
                 },
                 "example": {
                   "message": "List of tours",
@@ -903,7 +914,39 @@
                         "users": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/User"
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "phoneNumber": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              },
+                              "updatedAt": {
+                                "type": "string"
+                              },
+                              "isVerified": {
+                                "type": "boolean"
+                              },
+                              "tourUserId": {
+                                "type": "string"
+                              },
+                              "toursCount": {
+                                "type": "integer"
+                              }
+                            }
                           }
                         }
                       },
@@ -2211,46 +2254,46 @@
             "type": "string"
           },
           "bookingId": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "date": {
             "type": "string",
             "format": "date"
           },
           "subBookingType": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "propertyName": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "address": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "checkinDate": {
-            "type": "string",
+            "type": ["string", "null"],
             "format": "date"
           },
           "checkoutDate": {
-            "type": "string",
+            "type": ["string", "null"],
             "format": "date"
           },
           "serviceType": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "meal": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "payment": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "confirmedBy": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "serviceContact": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "confirmerContact": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "createdAt": {
             "type": "string",

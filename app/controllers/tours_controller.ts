@@ -37,17 +37,30 @@ export default class ToursController {
   }
 
   async show({ params, response }: HttpContext) {
-    const tour = await Tour.query()
-      .where('id', params.id)
-      .preload('users', (q) => {
-        q.withCount('tours')
-      })
-      .firstOrFail()
+    const tour = await Tour.findOrFail(params.id)
+
+    const users = await db
+      .from('users')
+      .join('tour_user', 'tour_user.user_id', 'users.id')
+      .where('tour_user.tour_id', params.id)
+      .select([
+        'users.id',
+        'users.name',
+        'users.email',
+        db.raw('users.phone_number as "phoneNumber"'),
+        'users.role',
+        db.raw('users.created_at as "createdAt"'),
+        db.raw('users.updated_at as "updatedAt"'),
+        db.raw('case when users.verified_at is null then false else true end as "isVerified"'),
+        db.raw('tour_user.id as "tourUserId"'),
+        db.raw('(select count(*) from tour_user tu2 where tu2.user_id = users.id) as "toursCount"'),
+      ])
+
     const data = {
       ...tour.serialize(),
-      users: tour.users.map((t) => ({
-        ...t.serialize(),
-        toursCount: Number(t.$extras.tours_count),
+      users: users.map((u: any) => ({
+        ...u,
+        toursCount: Number(u.toursCount),
       })),
     }
 
