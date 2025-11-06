@@ -1299,12 +1299,53 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                  "tourId": {
+                    "type": "string"
+                  },
+                  "userId": {
+                    "type": "string"
+                  },
+                  "adultCount": {
+                    "type": "integer"
+                  },
+                  "adultCost": {
+                    "type": "integer"
+                  },
+                  "adultGst": {
+                    "type": "integer"
+                  },
+                  "childCount": {
+                    "type": "integer"
+                  },
+                  "childCost": {
+                    "type": "integer"
+                  },
+                  "childGst": {
+                    "type": "integer"
+                  },
+                  "discountAmount": {
+                    "type": "integer"
+                  },
+                  "totalCost": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "tourId",
+                  "userId",
+                  "adultCount",
+                  "adultCost",
+                  "adultGst",
+                  "childCount",
+                  "childCost",
+                  "childGst",
+                  "discountAmount"
+                ]
               },
               "example": {
-                "tourId": "aciqdwz08w8xclu3k9fvzpkj",
-                "userId": "ia002559j7ju2gybhk6yribs",
-                "totalCost": 18500,
+                "tourId": "knqw7e075h22caokk6g9aw1z",
+                "userId": "h9rcdjd2zkow9h5ttt29lzx6",
                 "adultCount": 2,
                 "adultCost": 8000,
                 "adultGst": 18,
