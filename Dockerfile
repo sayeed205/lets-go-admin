@@ -20,19 +20,10 @@ ADD . .
 RUN node ace build
 
 # Production stage
-ARG TZ
-ARG PORT
-ARG HOST
-ARG LOG_LEVEL
-ARG APP_KEY
-ARG NODE_ENV
-ARG DATABASE_URL
-
 FROM base
 ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=production-deps /app/node_modules /app/node_modules
 COPY --from=build /app/build /app
-RUN node ace migration:run --force
 EXPOSE 3333
 CMD ["node", "./bin/server.js"]
