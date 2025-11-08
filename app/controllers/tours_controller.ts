@@ -1,5 +1,6 @@
 import db from '@adonisjs/lucid/services/db'
 import { cuid } from '@adonisjs/core/helpers'
+import { Infer } from '@vinejs/vine/types'
 import snakecaseKeys from 'snakecase-keys'
 
 import type { HttpContext } from '@adonisjs/core/http'
@@ -8,17 +9,30 @@ import Tour from '#models/tour'
 import {
   createTourUserValidator,
   createTourValidator,
+  tourFilterValidator,
   updateTourUserValidator,
   updateTourValidator,
 } from '#validators/tour_validator'
-import { Infer } from '@vinejs/vine/types'
 import User from '#models/user'
 import Voucher from '#models/voucher'
 import Receipt from '#models/receipt'
 
 export default class ToursController {
-  async index({ response }: HttpContext) {
-    const tours = await Tour.query().withCount('users')
+  async index({ request, response }: HttpContext) {
+    const { query, order, sortBy, start, end } = await tourFilterValidator.validate(request.qs())
+    const tours = await Tour.query()
+      .debug(true)
+      .if(start, (q) => {
+        q.where('startDate', '>=', start!)
+      })
+      .if(end, (q) => {
+        q.where('endDate', '<=', end!)
+      })
+      .if(query, (q) => {
+        q.whereILike('name', `%${query}%`)
+      })
+      .orderBy(sortBy === 'start' ? 'startDate' : 'endDate', order)
+      .withCount('users')
 
     return response.ok({
       message: 'List of tours',

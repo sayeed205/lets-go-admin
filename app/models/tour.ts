@@ -1,5 +1,6 @@
 import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, column, manyToMany } from '@adonisjs/lucid/orm'
+import { DateTime } from 'luxon'
 
 import type { ManyToMany } from '@adonisjs/lucid/types/relations'
 
@@ -10,6 +11,15 @@ import withTimestamps from '#models/utils/with_timestamps'
 export default class Tour extends compose(BaseModel, withID(), withTimestamps()) {
   @column()
   declare name: string
+
+  @column()
+  declare description: string
+
+  @column.date()
+  declare startDate: DateTime
+
+  @column.date()
+  declare endDate: DateTime
 
   @manyToMany(() => User, {
     pivotColumns: [
