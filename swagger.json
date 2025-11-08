@@ -238,9 +238,6 @@
                   "bookingId": {
                     "type": "string"
                   },
-                  "name": {
-                    "type": "string"
-                  },
                   "date": {
                     "type": "string"
                   },
@@ -254,12 +251,10 @@
                     "type": "string"
                   },
                   "checkinDate": {
-                    "type": "string",
-                    "format": "date"
+                    "type": "string"
                   },
                   "checkoutDate": {
-                    "type": "string",
-                    "format": "date"
+                    "type": "string"
                   },
                   "serviceType": {
                     "type": "string"
@@ -283,7 +278,6 @@
                 "required": [
                   "tourUserId",
                   "bookingId",
-                  "name",
                   "date",
                   "subBookingType",
                   "propertyName",
