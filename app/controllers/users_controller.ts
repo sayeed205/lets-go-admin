@@ -1,11 +1,27 @@
 import type { HttpContext } from '@adonisjs/core/http'
 
 import User from '#models/user'
-import { createUserValidator, updateUserValidator } from '#validators/user_validator'
+import {
+  createUserValidator,
+  updateUserValidator,
+  userFilterValidator,
+} from '#validators/user_validator'
 
 export default class UsersController {
-  async index({ response }: HttpContext) {
-    const users = await User.query().withCount('tours')
+  async index({ request, response }: HttpContext) {
+    const {
+      query,
+      sortBy = 'name',
+      order = 'asc',
+    } = await userFilterValidator.validate(request.qs())
+    const users = await User.query()
+      .if(query, (q) => {
+        q.where((w) => {
+          w.whereILike('name', `%${query}%`).orWhereILike('email', `%${query}%`)
+        })
+      })
+      .orderBy(sortBy!, order!)
+      .withCount('tours')
 
     return response.ok({
       message: 'List of users',

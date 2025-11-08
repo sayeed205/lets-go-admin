@@ -31,3 +31,11 @@ export const updateUserValidator = vine.compile(
     phoneNumber: phoneNumber.optional(),
   })
 )
+
+export const userFilterValidator = vine.compile(
+  vine.object({
+    query: vine.string().optional(),
+    sortBy: vine.enum(['name', 'email']).optional(),
+    order: vine.enum(['asc', 'desc']).optional(),
+  })
+)

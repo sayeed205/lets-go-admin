@@ -1062,7 +1062,42 @@
         "deprecated": false,
         "description": "",
         "tags": ["Users", "Users"],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "s",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "name",
+            "schema": {
+              "type": "string",
+              "enum": ["name", "email"],
+              "default": "name"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "asc",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"],
+              "default": "desc"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",

@@ -19,9 +19,14 @@ import Receipt from '#models/receipt'
 
 export default class ToursController {
   async index({ request, response }: HttpContext) {
-    const { query, order, sortBy, start, end } = await tourFilterValidator.validate(request.qs())
+    const {
+      query,
+      order = 'asc',
+      sortBy,
+      start,
+      end,
+    } = await tourFilterValidator.validate(request.qs())
     const tours = await Tour.query()
-      .debug(true)
       .if(start, (q) => {
         q.where('startDate', '>=', start!)
       })
