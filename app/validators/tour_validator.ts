@@ -3,8 +3,12 @@ import { DateTime } from 'luxon'
 
 const name = vine.string().trim().minLength(1).maxLength(255)
 const description = vine.string().optional()
-const startDate = vine.date({ formats: ['YYYY/DD/MM'] }).transform((d) => DateTime.fromJSDate(d))
-const endDate = vine.date({ formats: ['YYYY/DD/MM'] }).transform((d) => DateTime.fromJSDate(d))
+const startDate = vine
+  .date({ formats: ['YYYY/MM/DD', 'YYYY-MM-DD'] })
+  .transform((d) => DateTime.fromJSDate(d))
+const endDate = vine
+  .date({ formats: ['YYYY/MM/DD', 'YYYY-MM-DD'] })
+  .transform((d) => DateTime.fromJSDate(d))
 export const createTourValidator = vine.compile(
   vine.object({
     name: name,
