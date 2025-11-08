@@ -18,6 +18,11 @@ export default class ReceiptsController {
   async store({ request, response }: HttpContext) {
     const payload = await request.validateUsing(createReceiptValidator)
     const receipt = await Receipt.create(payload)
+    const tu = await db.from('tour_user').where('id', payload.tourUserId).first()
+    await db
+      .from('tour_user')
+      .where('id', tu.id)
+      .update({ received_amount: tu.received_amount + receipt.amount })
 
     return response.created({
       message: 'Receipt created successfully.',
