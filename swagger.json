@@ -239,7 +239,8 @@
                     "type": "string"
                   },
                   "date": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date"
                   },
                   "subBookingType": {
                     "type": "string"
@@ -251,10 +252,12 @@
                     "type": "string"
                   },
                   "checkinDate": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date"
                   },
                   "checkoutDate": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date"
                   },
                   "serviceType": {
                     "type": "string"
