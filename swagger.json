@@ -883,7 +883,7 @@
                     "format": "date"
                   }
                 },
-                "required": ["name", "startDate", "endDate"]
+                "required": ["name", "description", "startDate", "endDate"]
               },
               "examples": {}
             }
@@ -1972,6 +1972,41 @@
             },
             "headers": {}
           },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "totalCost": {
+                          "type": "integer"
+                        },
+                        "totalReceiving": {
+                          "type": "integer"
+                        },
+                        "discount": {
+                          "type": "integer"
+                        },
+                        "due": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["totalCost", "totalReceiving", "discount", "due"]
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
           "401": {
             "description": "",
             "content": {
@@ -2565,8 +2600,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "examples": [1]
+            "type": "string",
+            "maxLength": 25
           },
           "tourUserId": {
             "type": "string",

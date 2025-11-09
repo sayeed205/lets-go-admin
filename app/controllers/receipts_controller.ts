@@ -17,12 +17,30 @@ export default class ReceiptsController {
 
   async store({ request, response }: HttpContext) {
     const payload = await request.validateUsing(createReceiptValidator)
-    const receipt = await Receipt.create(payload)
     const tu = await db.from('tour_user').where('id', payload.tourUserId).first()
+    // const oldReceipts = await Receipt.query().where('tour_user_id', tu.id)
+    const { total: oldTotal = 0 } = (await db
+      .from('receipts')
+      .where('tour_user_id', payload.tourUserId)
+      .sum('amount as total')
+      .first()) || { total: 0 }
+    const newTotal = oldTotal + payload.amount
+    if (newTotal > tu.total_cost - tu.discount_amount)
+      return response.badRequest({
+        message: 'Can not exceed total cost',
+        data: {
+          totalCost: tu.total_cost,
+          totalReceiving: newTotal,
+          discount: tu.discount_amount,
+          due: tu.total_cost - tu.discount_amount - oldTotal,
+        },
+      })
+
+    const receipt = await Receipt.create(payload)
     await db
       .from('tour_user')
-      .where('id', tu.id)
-      .update({ received_amount: tu.received_amount + receipt.amount })
+      .where('id', payload.tourUserId)
+      .update({ received_amount: oldTotal + receipt.amount })
 
     return response.created({
       message: 'Receipt created successfully.',

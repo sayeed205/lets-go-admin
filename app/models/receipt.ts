@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { compose } from '@adonisjs/core/helpers'
+import withID from '#models/utils/with_id'
+import withTimestamps from '#models/utils/with_timestamps'
 
-export default class Receipt extends BaseModel {
-  @column({ isPrimary: true })
-  declare id: number
-
+export default class Receipt extends compose(BaseModel, withID(), withTimestamps()) {
   @column()
   declare tourUserId: string
 
@@ -19,10 +19,4 @@ export default class Receipt extends BaseModel {
 
   @column()
   declare methodInfo: string
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
 }
