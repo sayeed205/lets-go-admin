@@ -2,16 +2,18 @@ import vine from '@vinejs/vine'
 import { DateTime } from 'luxon'
 
 const bookingId = vine.string().trim().minLength(1).optional()
-const date = vine.date().transform((d) => DateTime.fromJSDate(d))
+const date = vine
+  .date({ formats: ['YYYY/MM/DD', 'YYYY-MM-DD'] })
+  .transform((d) => DateTime.fromJSDate(d))
 const subBookingType = vine.string().trim().minLength(1).optional()
 const propertyName = vine.string().trim().minLength(1).optional()
 const address = vine.string().trim().minLength(1).optional()
 const checkinDate = vine
-  .date()
+  .date({ formats: ['YYYY/MM/DD', 'YYYY-MM-DD'] })
   .transform((d) => DateTime.fromJSDate(d))
   .optional()
 const checkoutDate = vine
-  .date()
+  .date({ formats: ['YYYY/MM/DD', 'YYYY-MM-DD'] })
   .transform((d) => DateTime.fromJSDate(d))
   .optional()
 const serviceType = vine.string().trim().minLength(1).optional()
