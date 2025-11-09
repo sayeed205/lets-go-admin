@@ -2052,9 +2052,10 @@
             "in": "path",
             "description": "",
             "required": true,
-            "example": 1,
+            "example": "klgd9m9t3d2qc3nvj6dpwxgi",
             "schema": {
-              "type": "integer"
+              "type": "string",
+              "maxLength": 25
             }
           }
         ],
@@ -2122,6 +2123,41 @@
             },
             "headers": {}
           },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "totalCost": {
+                          "type": "integer"
+                        },
+                        "totalReceiving": {
+                          "type": "integer"
+                        },
+                        "discount": {
+                          "type": "integer"
+                        },
+                        "due": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["totalCost", "totalReceiving", "discount", "due"]
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
           "401": {
             "description": "",
             "content": {
@@ -2165,9 +2201,9 @@
             "in": "path",
             "description": "",
             "required": true,
-            "example": 1,
+            "example": "klgd9m9t3d2qc3nvj6dpwxgi",
             "schema": {
-              "type": "integer"
+              "type": "string"
             }
           }
         ],
@@ -2183,59 +2219,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "examples": [1]
-                        },
-                        "tourUserId": {
-                          "type": "string",
-                          "examples": ["vz2v78oilpbnnbai2jbpzzql"]
-                        },
-                        "date": {
-                          "type": "string",
-                          "format": "date",
-                          "examples": ["2024-10-17"]
-                        },
-                        "amount": {
-                          "type": "integer",
-                          "examples": [9200]
-                        },
-                        "method": {
-                          "type": "string",
-                          "examples": ["Cheque"]
-                        },
-                        "methodInfo": {
-                          "type": "string",
-                          "examples": ["Cheque #003487"]
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "user": {
-                          "$ref": "#/components/schemas/User"
-                        },
-                        "tour": {
-                          "$ref": "#/components/schemas/Tour"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "tourUserId",
-                        "date",
-                        "amount",
-                        "method",
-                        "createdAt",
-                        "updatedAt",
-                        "user",
-                        "tour"
-                      ]
+                      "$ref": "#/components/schemas/Receipt"
                     }
                   },
                   "required": ["message", "data"]

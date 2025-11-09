@@ -18,7 +18,6 @@ export default class ReceiptsController {
   async store({ request, response }: HttpContext) {
     const payload = await request.validateUsing(createReceiptValidator)
     const tu = await db.from('tour_user').where('id', payload.tourUserId).first()
-    // const oldReceipts = await Receipt.query().where('tour_user_id', tu.id)
     const { total: oldTotal = 0 } = (await db
       .from('receipts')
       .where('tour_user_id', payload.tourUserId)
@@ -71,8 +70,45 @@ export default class ReceiptsController {
     const receipt = await Receipt.findOrFail(params.id)
     const payload = await request.validateUsing(updateReceiptValidator)
 
+    // Determine the new amount (if not provided, keep existing amount)
+    const newAmount = (payload as any).amount ?? receipt.amount
+
+    // Sum of all other receipts for this tour user (excluding this receipt)
+    const { total: othersTotal = 0 } = (await db
+      .from('receipts')
+      .where('tour_user_id', receipt.tourUserId)
+      .whereNot('id', receipt.id)
+      .sum('amount as total')
+      .first()) || { total: 0 }
+
+    // Fetch tour user to validate limits
+    const tu = await db.from('tour_user').where('id', receipt.tourUserId).first()
+    if (!tu) return response.notFound({ message: 'Tour user not found.' })
+
+    const newTotal = Number(othersTotal) + Number(newAmount)
+    const limit = Number(tu.total_cost) - Number(tu.discount_amount)
+
+    if (newTotal > limit) {
+      return response.badRequest({
+        message: 'Can not exceed total cost',
+        data: {
+          totalCost: tu.total_cost,
+          totalReceiving: newTotal,
+          discount: tu.discount_amount,
+          due: limit - Number(othersTotal),
+        },
+      })
+    }
+
+    // Persist the receipt changes
     receipt.merge(payload)
     await receipt.save()
+
+    // Update aggregate received amount on tour_user
+    await db
+      .from('tour_user')
+      .where('id', receipt.tourUserId)
+      .update({ received_amount: Number(othersTotal) + Number(receipt.amount) })
 
     return response.ok({
       message: 'Receipt updated successfully.',
