@@ -296,7 +296,7 @@
                 ]
               },
               "example": {
-                "tourUserId": "vz2v78oilpbnnbai2jbpzzql",
+                "tourUserId": "ix3hiovzr6585efrc486gr0r",
                 "bookingId": "BK-2024-001",
                 "name": "John Doe",
                 "date": "2024-10-17",
@@ -739,7 +739,7 @@
             "in": "query",
             "description": "",
             "required": false,
-            "example": "dar",
+            "example": "",
             "schema": {
               "type": "string"
             }
@@ -888,7 +888,12 @@
                 },
                 "required": ["name", "description", "startDate", "endDate"]
               },
-              "examples": {}
+              "example": {
+                "name": "Opal McLaughlin",
+                "description": "Demum commodi demens tactus speciosus tutamen damnatio thalassinus id. Atrocitas absens amet repellat bibo aduro earum minima. Quam thesis pauci pax eum.",
+                "startDate": "2025-01-22",
+                "endDate": "2025-03-06"
+              }
             }
           },
           "required": true
@@ -962,7 +967,7 @@
             "in": "path",
             "description": "",
             "required": true,
-            "example": "aciqdwz08w8xclu3k9fvzpkj",
+            "example": "htce1t5mae7be0lldd6mzx9w",
             "schema": {
               "type": "string"
             }
@@ -1048,6 +1053,87 @@
             "bearer": []
           }
         ]
+      },
+      "delete": {
+        "summary": "Delete a Tour",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Tours"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "tb1jpwwpyekboln6be5psrjr",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "masterKey": {
+                    "type": "string"
+                  }
+                },
+                "required": ["masterKey"]
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/api/users": {
@@ -1062,7 +1148,7 @@
             "in": "query",
             "description": "",
             "required": false,
-            "example": "s",
+            "example": "",
             "schema": {
               "type": "string"
             }
@@ -1340,6 +1426,103 @@
             "bearer": []
           }
         ]
+      },
+      "delete": {
+        "summary": "Delete an user",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "zzkn53a25scnhklv40dznn1r",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "masterKey": {
+                    "type": "string"
+                  }
+                },
+                "required": ["masterKey"]
+              },
+              "examples": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/api/tour-user": {
@@ -1399,8 +1582,8 @@
                 ]
               },
               "example": {
-                "tourId": "knqw7e075h22caokk6g9aw1z",
-                "userId": "h9rcdjd2zkow9h5ttt29lzx6",
+                "tourId": "bizzo8duymou4qrbuf7remkh",
+                "userId": "zzkn53a25scnhklv40dznn1r",
                 "adultCount": 2,
                 "adultCost": 8000,
                 "adultGst": 18,
@@ -1567,7 +1750,7 @@
             "in": "path",
             "description": "",
             "required": true,
-            "example": "vz2v78oilpbnnbai2jbpzzql",
+            "example": "htce1t5mae7be0lldd6mzx9w",
             "schema": {
               "type": "string"
             }
@@ -1723,6 +1906,17 @@
               }
             },
             "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
           }
         },
         "security": [
@@ -1868,7 +2062,7 @@
                 "required": ["tourUserId", "date", "amount", "method"]
               },
               "example": {
-                "tourUserId": "vz2v78oilpbnnbai2jbpzzql",
+                "tourUserId": "ix3hiovzr6585efrc486gr0r",
                 "date": "2024-10-17",
                 "amount": 8500,
                 "method": "Cash",

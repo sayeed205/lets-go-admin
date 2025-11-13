@@ -1,5 +1,5 @@
+import { cuid, safeEqual } from '@adonisjs/core/helpers'
 import db from '@adonisjs/lucid/services/db'
-import { cuid } from '@adonisjs/core/helpers'
 import { Infer } from '@vinejs/vine/types'
 import snakecaseKeys from 'snakecase-keys'
 
@@ -16,6 +16,8 @@ import {
 import User from '#models/user'
 import Voucher from '#models/voucher'
 import Receipt from '#models/receipt'
+import { validateMasterKey } from '#validators/user_validator'
+import env from '#start/env'
 
 export default class ToursController {
   async index({ request, response }: HttpContext) {
@@ -102,11 +104,30 @@ export default class ToursController {
     })
   }
 
+  async destroy({ params, request, response }: HttpContext) {
+    const { masterKey } = await request.validateUsing(validateMasterKey)
+    console.log({
+      masterKey,
+      env: env.get('MASTER_KEY'),
+      safe: safeEqual(env.get('MASTER_KEY'), masterKey),
+    })
+    if (!safeEqual(env.get('MASTER_KEY'), masterKey)) {
+      return response.unauthorized({
+        message: 'Invalid credentials',
+      })
+    }
+
+    const tour = await Tour.findOrFail(params.id)
+    await tour.delete()
+    return response.ok({
+      message: 'Tour delete successfully',
+    })
+  }
+
   async addUser({ request, response }: HttpContext) {
     const payload = await request.validateUsing(createTourUserValidator)
     const tu = await db
       .from('tour_user')
-      .debug(true)
       .where('user_id', payload.userId)
       .andWhere('tour_id', payload.tourId)
       .first()
@@ -119,7 +140,6 @@ export default class ToursController {
     await db
       .table('tour_user')
       .returning(['id'])
-      .debug(true)
       .insert(
         snakecaseKeys({
           ...payload,

@@ -39,3 +39,9 @@ export const userFilterValidator = vine.compile(
     order: vine.enum(['asc', 'desc']).optional(),
   })
 )
+
+export const validateMasterKey = vine.compile(
+  vine.object({
+    masterKey: vine.string(),
+  })
+)

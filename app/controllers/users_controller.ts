@@ -1,3 +1,5 @@
+import { safeEqual } from '@adonisjs/core/helpers'
+
 import type { HttpContext } from '@adonisjs/core/http'
 
 import User from '#models/user'
@@ -5,7 +7,9 @@ import {
   createUserValidator,
   updateUserValidator,
   userFilterValidator,
+  validateMasterKey,
 } from '#validators/user_validator'
+import env from '#start/env'
 
 export default class UsersController {
   async index({ request, response }: HttpContext) {
@@ -70,6 +74,27 @@ export default class UsersController {
     return response.ok({
       message: 'User updated successfully.',
       data: user,
+    })
+  }
+
+  async destroy({ auth, params, request, response }: HttpContext) {
+    const { masterKey } = await request.validateUsing(validateMasterKey)
+    if (!safeEqual(env.get('MASTER_KEY'), masterKey)) {
+      return response.unauthorized({
+        message: 'Invalid credentials',
+      })
+    }
+    const authUser = auth.getUserOrFail()
+
+    const user = await User.findOrFail(params.id)
+    if (safeEqual(user.id, authUser.id)) {
+      return response.badRequest({
+        message: 'You can not delete yourself.',
+      })
+    }
+    await user.delete()
+    return response.ok({
+      message: 'User deleted successfully',
     })
   }
 }

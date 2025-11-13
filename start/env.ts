@@ -24,4 +24,6 @@ export default await Env.create(new URL('../', import.meta.url), {
   |----------------------------------------------------------
   */
   DATABASE_URL: Env.schema.string(),
+
+  MASTER_KEY: Env.schema.string()
 })

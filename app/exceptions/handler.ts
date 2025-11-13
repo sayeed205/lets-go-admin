@@ -1,5 +1,6 @@
 import { errors as coreErrors } from '@adonisjs/core'
 import { errors as authErrors } from '@adonisjs/auth'
+import { errors as lucidErrors } from '@adonisjs/lucid'
 import { ExceptionHandler, HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
 
@@ -15,7 +16,10 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * response to the client
    */
   async handle(error: unknown, ctx: HttpContext) {
-    if (error instanceof coreErrors.E_ROUTE_NOT_FOUND) {
+    if (
+      error instanceof coreErrors.E_ROUTE_NOT_FOUND ||
+      error instanceof lucidErrors.E_ROW_NOT_FOUND
+    ) {
       return ctx.response.notFound({ message: 'Resource not found' })
     }
 

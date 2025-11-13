@@ -50,24 +50,14 @@ router
 | Tours Routes
 |--------------------------------------------------------------------------
 */
-router
-  .resource('api/tours', ToursController)
-  .apiOnly()
-  .except(['destroy'])
-  .as('tours')
-  .use('*', middleware.auth())
+router.resource('api/tours', ToursController).apiOnly().as('tours').use('*', middleware.auth())
 
 /*
 |--------------------------------------------------------------------------
 | Users Routes
 |--------------------------------------------------------------------------
 */
-router
-  .resource('api/users', UsersController)
-  .apiOnly()
-  .except(['destroy'])
-  .as('users')
-  .use('*', middleware.auth())
+router.resource('api/users', UsersController).apiOnly().as('users').use('*', middleware.auth())
 
 /*
 |--------------------------------------------------------------------------
