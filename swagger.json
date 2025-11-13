@@ -1294,70 +1294,7 @@
                           "type": "string"
                         },
                         "phoneNumber": {
-                          "type": "string"
-                        },
-                        "role": {
-                          "type": "string"
-                        },
-                        "createdAt": {
-                          "type": "string"
-                        },
-                        "updatedAt": {
-                          "type": "string"
-                        },
-                        "tours": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Tour"
-                          }
-                        },
-                        "isVerified": {
-                          "type": "boolean"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "name",
-                        "email",
-                        "phoneNumber",
-                        "role",
-                        "createdAt",
-                        "updatedAt",
-                        "tours",
-                        "isVerified"
-                      ]
-                    }
-                  },
-                  "required": ["message", "data"]
-                }
-              }
-            },
-            "headers": {}
-          },
-          "x-200-2": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "phoneNumber": {
-                          "type": "string"
+                          "type": ["string", "null"]
                         },
                         "role": {
                           "type": "string"
