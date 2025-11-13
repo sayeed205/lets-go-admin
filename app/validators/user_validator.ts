@@ -42,6 +42,8 @@ export const userFilterValidator = vine.compile(
 
 export const validateMasterKey = vine.compile(
   vine.object({
-    masterKey: vine.string(),
+    headers: vine.object({
+      'x-api-key': vine.string(),
+    }),
   })
 )

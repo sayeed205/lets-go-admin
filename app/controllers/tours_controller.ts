@@ -105,13 +105,8 @@ export default class ToursController {
   }
 
   async destroy({ params, request, response }: HttpContext) {
-    const { masterKey } = await request.validateUsing(validateMasterKey)
-    console.log({
-      masterKey,
-      env: env.get('MASTER_KEY'),
-      safe: safeEqual(env.get('MASTER_KEY'), masterKey),
-    })
-    if (!safeEqual(env.get('MASTER_KEY'), masterKey)) {
+    const { headers } = await request.validateUsing(validateMasterKey)
+    if (!safeEqual(env.get('MASTER_KEY'), headers['x-api-key'])) {
       return response.unauthorized({
         message: 'Invalid credentials',
       })

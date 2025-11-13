@@ -78,8 +78,8 @@ export default class UsersController {
   }
 
   async destroy({ auth, params, request, response }: HttpContext) {
-    const { masterKey } = await request.validateUsing(validateMasterKey)
-    if (!safeEqual(env.get('MASTER_KEY'), masterKey)) {
+    const { headers } = await request.validateUsing(validateMasterKey)
+    if (!safeEqual(env.get('MASTER_KEY'), headers['x-api-key'])) {
       return response.unauthorized({
         message: 'Invalid credentials',
       })

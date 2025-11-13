@@ -1069,25 +1069,18 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "delete kor",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "masterKey": {
-                    "type": "string"
-                  }
-                },
-                "required": ["masterKey"]
-              },
-              "example": null
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
             "description": "",
@@ -1442,25 +1435,18 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "masterKey": {
-                    "type": "string"
-                  }
-                },
-                "required": ["masterKey"]
-              },
-              "examples": {}
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
             "description": "",
