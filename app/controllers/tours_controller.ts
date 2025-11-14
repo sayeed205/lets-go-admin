@@ -126,7 +126,6 @@ export default class ToursController {
       .where('user_id', payload.userId)
       .andWhere('tour_id', payload.tourId)
       .first()
-    console.log('tu', tu)
     if (tu)
       return response.badRequest({
         message: 'User is already in the tour.',
@@ -190,6 +189,6 @@ export default class ToursController {
     const childSubtotal = (data.childCount ?? 0) * (data.childCost ?? 0)
     const childGstAmount = data.childGst ? (childSubtotal * data.childGst) / 100 : 0
 
-    return adultSubtotal + adultGstAmount + childSubtotal + childGstAmount
+    return Math.round(adultSubtotal + adultGstAmount + childSubtotal + childGstAmount)
   }
 }

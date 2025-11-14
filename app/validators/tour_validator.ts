@@ -32,7 +32,7 @@ const adultCost = vine.number().min(1)
 const adultGst = vine.number().min(1).max(100).optional()
 const childCount = vine.number().min(0).max(255).optional()
 const childCost = vine.number().min(0).optional()
-const childGst = vine.number().min(1).max(100).optional()
+const childGst = vine.number().min(0).max(100).optional()
 const discountAmount = vine.number().min(0).optional()
 
 export const createTourUserValidator = vine.compile(
