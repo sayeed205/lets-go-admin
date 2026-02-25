@@ -23,7 +23,7 @@ export default class ReceiptsController {
       .where('tour_user_id', payload.tourUserId)
       .sum('amount as total')
       .first()) || { total: 0 }
-    const newTotal = oldTotal + payload.amount
+    const newTotal = Number(oldTotal) + Number(payload.amount)
     if (newTotal > tu.total_cost - tu.discount_amount)
       return response.badRequest({
         message: 'Can not exceed total cost',
