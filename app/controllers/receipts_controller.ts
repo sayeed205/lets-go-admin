@@ -39,7 +39,7 @@ export default class ReceiptsController {
     await db
       .from('tour_user')
       .where('id', payload.tourUserId)
-      .update({ received_amount: oldTotal + receipt.amount })
+      .update({ received_amount: Number(oldTotal) + Number(receipt.amount) })
 
     return response.created({
       message: 'Receipt created successfully.',
