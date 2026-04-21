@@ -17,6 +17,8 @@ const ToursController = () => import('#controllers/tours_controller')
 const UsersController = () => import('#controllers/users_controller')
 const VouchersController = () => import('#controllers/vouchers_controller')
 const ReceiptController = () => import('#controllers/receipts_controller')
+const RemindersController = () => import('#controllers/reminders_controller')
+const DeviceTokensController = () => import('#controllers/device_tokens_controller')
 
 /*
 |--------------------------------------------------------------------------
@@ -99,3 +101,38 @@ router
   .use(middleware.auth())
   .prefix('api/tour-user')
   .as('tours')
+
+/*
+|--------------------------------------------------------------------------
+| Reminders Routes
+|--------------------------------------------------------------------------
+*/
+router
+  .group(() => {
+    router.get('/', [RemindersController, 'index']).as('index')
+    router.get('/upcoming', [RemindersController, 'upcoming']).as('upcoming')
+    router.get('/today', [RemindersController, 'today']).as('today')
+    router.post('/', [RemindersController, 'store']).as('store')
+    router.get('/:id', [RemindersController, 'show']).as('show')
+    router.put('/:id', [RemindersController, 'update']).as('update')
+    router.delete('/:id', [RemindersController, 'destroy']).as('destroy')
+    router.patch('/:id/complete', [RemindersController, 'markCompleted']).as('complete')
+  })
+  .use(middleware.auth())
+  .prefix('api/reminders')
+  .as('reminders')
+
+/*
+|--------------------------------------------------------------------------
+| Device Tokens Routes (FCM)
+|--------------------------------------------------------------------------
+*/
+router
+  .group(() => {
+    router.get('/', [DeviceTokensController, 'index']).as('index')
+    router.post('/', [DeviceTokensController, 'store']).as('store')
+    router.delete('/:id', [DeviceTokensController, 'destroy']).as('destroy')
+  })
+  .use(middleware.auth())
+  .prefix('api/devices')
+  .as('devices')

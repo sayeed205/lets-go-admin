@@ -23,6 +23,12 @@
     },
     {
       "name": "Receipts"
+    },
+    {
+      "name": "Reminders"
+    },
+    {
+      "name": "Device Tokens"
     }
   ],
   "paths": {
@@ -1594,7 +1600,8 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "null"
+                      "type": "object",
+                      "nullable": true
                     }
                   },
                   "required": ["message", "data"]
@@ -1613,7 +1620,7 @@
     },
     "/api/tour-user/{id}": {
       "patch": {
-        "summary": "Update a tour user",
+        "summary": "Update User in Tour",
         "deprecated": false,
         "description": "",
         "tags": ["Tour User", "Tour User"],
@@ -1623,7 +1630,6 @@
             "in": "path",
             "description": "",
             "required": true,
-            "example": "ddi3zbv45837k6mw77s4qjdm",
             "schema": {
               "type": "string"
             }
@@ -1635,9 +1641,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "totalCost": {
-                    "type": "integer"
-                  },
                   "adultCount": {
                     "type": "integer"
                   },
@@ -1658,18 +1661,11 @@
                   },
                   "discountAmount": {
                     "type": "integer"
+                  },
+                  "totalCost": {
+                    "type": "integer"
                   }
                 }
-              },
-              "example": {
-                "totalCost": 18500,
-                "adultCount": 2,
-                "adultCost": 8000,
-                "adultGst": 18,
-                "childCount": 1,
-                "childCost": 2500,
-                "childGst": 12,
-                "discountAmount": 2323
               }
             }
           },
@@ -1681,38 +1677,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "null"
-                    }
-                  },
-                  "required": ["message", "data"]
-                }
-              }
-            },
-            "headers": {}
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
                   "$ref": "#/components/schemas/MessageBody"
-                }
-              }
-            },
-            "headers": {}
-          },
-          "422": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationError"
                 }
               }
             },
@@ -2397,6 +2362,679 @@
           }
         ]
       }
+    },
+    "/api/reminders": {
+      "get": {
+        "summary": "Get All Reminders",
+        "deprecated": false,
+        "description": "Get all reminders for the authenticated user",
+        "tags": ["Reminders"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Reminder"
+                      }
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Reminder",
+        "deprecated": false,
+        "description": "Create a new reminder",
+        "tags": ["Reminders"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "voucherId": {
+                    "type": "string"
+                  },
+                  "voucherName": {
+                    "type": "string"
+                  },
+                  "tourName": {
+                    "type": "string"
+                  },
+                  "userName": {
+                    "type": "string"
+                  },
+                  "reminderDateTime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                },
+                "required": ["voucherName", "tourName", "userName", "reminderDateTime"]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Reminder"
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/reminders/upcoming": {
+      "get": {
+        "summary": "Get Upcoming Reminders",
+        "deprecated": false,
+        "description": "Get upcoming reminders (next 7 days)",
+        "tags": ["Reminders"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Reminder"
+                      }
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/reminders/today": {
+      "get": {
+        "summary": "Get Today's Reminders",
+        "deprecated": false,
+        "description": "Get today's reminders",
+        "tags": ["Reminders"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Reminder"
+                      }
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/reminders/{id}": {
+      "get": {
+        "summary": "Get Reminder by ID",
+        "deprecated": false,
+        "description": "Get a specific reminder",
+        "tags": ["Reminders"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Reminder"
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update Reminder",
+        "deprecated": false,
+        "description": "Update a reminder",
+        "tags": ["Reminders"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "voucherName": {
+                    "type": "string"
+                  },
+                  "tourName": {
+                    "type": "string"
+                  },
+                  "userName": {
+                    "type": "string"
+                  },
+                  "reminderDateTime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "note": {
+                    "type": "string"
+                  },
+                  "isCompleted": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Reminder"
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Reminder",
+        "deprecated": false,
+        "description": "Delete a reminder",
+        "tags": ["Reminders"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/reminders/{id}/complete": {
+      "patch": {
+        "summary": "Mark Reminder as Completed",
+        "deprecated": false,
+        "description": "Mark a reminder as completed",
+        "tags": ["Reminders"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Reminder"
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/devices": {
+      "get": {
+        "summary": "Get All Device Tokens",
+        "deprecated": false,
+        "description": "Get all registered devices for the authenticated user",
+        "tags": ["Device Tokens"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DeviceToken"
+                      }
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Register Device Token",
+        "deprecated": false,
+        "description": "Register or update FCM token for push notifications",
+        "tags": ["Device Tokens"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fcmToken": {
+                    "type": "string"
+                  },
+                  "deviceId": {
+                    "type": "string"
+                  },
+                  "deviceName": {
+                    "type": "string"
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": ["android", "ios"]
+                  }
+                },
+                "required": ["fcmToken", "deviceId", "platform"]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DeviceToken"
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DeviceToken"
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/devices/{id}": {
+      "delete": {
+        "summary": "Remove Device Token",
+        "deprecated": false,
+        "description": "Remove a device token (logout from specific device)",
+        "tags": ["Device Tokens"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
     }
   },
   "webhooks": {},
@@ -2741,6 +3379,96 @@
           }
         },
         "required": ["id", "tourUserId", "date", "amount", "method", "createdAt", "updatedAt"]
+      },
+      "Reminder": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "voucherId": {
+            "type": ["string", "null"]
+          },
+          "voucherName": {
+            "type": "string"
+          },
+          "tourName": {
+            "type": "string"
+          },
+          "userName": {
+            "type": "string"
+          },
+          "reminderDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "note": {
+            "type": "string"
+          },
+          "isCompleted": {
+            "type": "boolean"
+          },
+          "isSent": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "voucherName",
+          "tourName",
+          "userName",
+          "reminderDateTime",
+          "isCompleted",
+          "isSent"
+        ]
+      },
+      "DeviceToken": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "fcmToken": {
+            "type": "string"
+          },
+          "deviceId": {
+            "type": "string"
+          },
+          "deviceName": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string",
+            "enum": ["android", "ios"]
+          },
+          "lastUsedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["id", "fcmToken", "deviceId", "platform"]
       }
     },
     "securitySchemes": {
