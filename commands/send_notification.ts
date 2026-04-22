@@ -27,7 +27,9 @@ export default class SendNotification extends BaseCommand {
     for (const reminder of dueReminders) {
       try {
         await fcmService.sendToUser(reminder.userId, {
-          title: reminder.voucherName.startsWith('Payment Due:') ? 'Payment Reminder' : 'Voucher Reminder',
+          title: reminder.voucherName.startsWith('Payment Due:')
+            ? 'Payment Reminder'
+            : 'Voucher Reminder',
           body: `${reminder.userName} - ${reminder.voucherName} (${reminder.tourName})`,
           data: {
             reminderId: reminder.id,

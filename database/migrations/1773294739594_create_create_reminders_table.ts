@@ -6,8 +6,18 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.string('id', 25).primary()
-      table.string('user_id', 25).notNullable().references('id').inTable('users').onDelete('CASCADE')
-      table.string('voucher_id', 25).nullable().references('id').inTable('vouchers').onDelete('CASCADE')
+      table
+        .string('user_id', 25)
+        .notNullable()
+        .references('id')
+        .inTable('users')
+        .onDelete('CASCADE')
+      table
+        .string('voucher_id', 25)
+        .nullable()
+        .references('id')
+        .inTable('vouchers')
+        .onDelete('CASCADE')
       table.string('voucher_name').notNullable()
       table.string('tour_name').notNullable()
       table.string('user_name').notNullable()
